@@ -13,21 +13,49 @@
       --bg-main: #f7f4ee;
       --bg-soft: #fcfaf6;
       --bg-accent: #f2ede3;
+      --surface: rgba(255,255,255,0.86);
+      --surface-2: #fffdf9;
+      --surface-3: #faf5ec;
+      --surface-4: #f3ede3;
       --green-500: #4e8f69;
       --green-600: #3f7958;
       --green-700: #2d5f43;
       --text-primary: #1f2937;
       --text-secondary: #6b7280;
       --border: rgba(31, 41, 55, 0.10);
-      --card: #fffdf9;
       --shadow: 0 10px 28px rgba(31, 41, 55, 0.06);
+      --badge-bg: #efe5d4;
+      --badge-text: #7c5a1c;
+      --gold: #b7791f;
+      --silver: #6b7280;
+      --bronze: #9a5b35;
+    }
+
+    body.dark {
+      --bg-main: #11161b;
+      --bg-soft: #171d23;
+      --bg-accent: #202832;
+      --surface: rgba(26, 33, 40, 0.92);
+      --surface-2: #1b232b;
+      --surface-3: #212a33;
+      --surface-4: #26303a;
+      --text-primary: #ecf2f8;
+      --text-secondary: #9ca8b5;
+      --border: rgba(255, 255, 255, 0.10);
+      --shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+      --badge-bg: #2d3945;
+      --badge-text: #d6b97a;
+      --gold: #e4bf65;
+      --silver: #b6c0cb;
+      --bronze: #d19a70;
     }
 
     body {
       font-family: 'DM Sans', sans-serif;
-      background: linear-gradient(180deg, #f6f2ea 0%, #fcfaf6 100%);
+      background: linear-gradient(180deg, var(--bg-main) 0%, var(--bg-soft) 100%);
       color: var(--text-primary);
       min-height: 100vh;
+      transition: background 0.2s ease, color 0.2s ease;
     }
 
     .hidden { display: none !important; }
@@ -37,14 +65,17 @@
       display: grid;
       place-items: center;
       padding: 24px;
-      background: linear-gradient(180deg, #f5f1e8 0%, #fcfaf6 100%);
+      background: linear-gradient(180deg, var(--bg-main) 0%, var(--bg-soft) 100%);
     }
 
     .auth-card,
     .card,
     .metric-card,
-    .user-pill {
-      background: rgba(255,255,255,0.86);
+    .user-pill,
+    .nav-btn,
+    .ghost-btn,
+    .tab-toggle button {
+      background: var(--surface);
       backdrop-filter: blur(8px);
     }
 
@@ -107,7 +138,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
-      background: #f1ece2;
+      background: var(--bg-accent);
       padding: 6px;
       border-radius: 14px;
       margin-bottom: 18px;
@@ -125,8 +156,13 @@
 
     .switcher button.active {
       background: rgba(255,255,255,0.95);
-      color: var(--text-primary);
+      color: #1f2937;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    body.dark .switcher button.active {
+      background: #ecf2f8;
+      color: #11161b;
     }
 
     .field { margin-bottom: 14px; }
@@ -146,7 +182,12 @@
       font-size: 14px;
       outline: none;
       background: rgba(255,255,255,0.96);
-      color: var(--text-primary);
+      color: #1f2937;
+    }
+
+    body.dark .field input {
+      background: #131a21;
+      color: #ecf2f8;
     }
 
     .field input:focus {
@@ -167,14 +208,10 @@
       margin-top: 6px;
     }
 
-    .primary-btn:hover {
-      filter: brightness(0.98);
-    }
-
     .demo-box {
       margin-top: 18px;
-      background: #faf7f1;
-      border: 1px dashed #ddd4c7;
+      background: var(--surface-3);
+      border: 1px dashed var(--border);
       border-radius: 14px;
       padding: 14px;
     }
@@ -199,7 +236,7 @@
 
     .dash {
       padding: 2rem 1.5rem 4rem;
-      max-width: 1120px;
+      max-width: 1180px;
       margin: 0 auto;
     }
 
@@ -207,7 +244,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       gap: 12px;
       flex-wrap: wrap;
     }
@@ -246,8 +283,8 @@
 
     .week-badge {
       font-size: 12px;
-      background: #efe5d4;
-      color: #7c5a1c;
+      background: var(--badge-bg);
+      color: var(--badge-text);
       padding: 6px 14px;
       border-radius: 999px;
       font-weight: 600;
@@ -283,7 +320,6 @@
 
     .ghost-btn {
       border: 1px solid var(--border);
-      background: rgba(255,255,255,0.82);
       color: var(--text-primary);
       padding: 9px 14px;
       border-radius: 999px;
@@ -291,6 +327,32 @@
       font-size: 12px;
       font-weight: 700;
     }
+
+    .nav-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg, var(--green-600), var(--green-700));
+      color: white;
+      border-color: transparent;
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
 
     .metrics-row {
       display: grid;
@@ -333,6 +395,13 @@
       margin-bottom: 14px;
     }
 
+    .three-col {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr 0.95fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
     .card {
       border: 1px solid var(--border);
       border-radius: 18px;
@@ -347,17 +416,30 @@
       margin-bottom: 14px;
     }
 
+    .card-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
     .leaderboard-row,
-    .reward-row {
+    .reward-row,
+    .history-row,
+    .friend-row,
+    .perk-row {
       display: flex;
       align-items: center;
       gap: 10px;
       padding: 10px 0;
-      border-bottom: 1px solid #efe9df;
+      border-bottom: 1px solid var(--border);
     }
 
     .leaderboard-row:last-child,
-    .reward-row:last-child {
+    .reward-row:last-child,
+    .history-row:last-child,
+    .friend-row:last-child,
+    .perk-row:last-child {
       border-bottom: none;
     }
 
@@ -369,36 +451,59 @@
       text-align: center;
     }
 
-    .lb-rank.gold { color: #b7791f; }
-    .lb-rank.silver { color: #6b7280; }
-    .lb-rank.bronze { color: #9a5b35; }
+    .lb-rank.gold { color: var(--gold); }
+    .lb-rank.silver { color: var(--silver); }
+    .lb-rank.bronze { color: var(--bronze); }
 
-    .lb-info { flex: 1; }
+    .lb-info,
+    .reward-info,
+    .friend-info,
+    .history-info,
+    .perk-info {
+      flex: 1;
+    }
 
-    .lb-name {
+    .lb-name,
+    .reward-name,
+    .friend-name,
+    .history-name,
+    .perk-name {
       font-size: 13px;
       font-weight: 600;
       color: var(--text-primary);
     }
 
-    .lb-meta {
+    .lb-meta,
+    .reward-detail,
+    .friend-meta,
+    .history-meta,
+    .perk-detail {
       font-size: 11px;
       color: var(--text-secondary);
       margin-top: 2px;
     }
 
-    .lb-pts {
+    .lb-pts,
+    .reward-pts,
+    .friend-pts,
+    .history-pts,
+    .perk-pts {
       font-size: 13px;
       font-weight: 700;
       color: var(--green-600);
-      min-width: 48px;
+      min-width: 52px;
       text-align: right;
+    }
+
+    .reward-pts,
+    .perk-pts {
+      color: #9a6700;
     }
 
     .lb-bar-wrap {
       width: 66px;
       height: 6px;
-      background: #eee6da;
+      background: var(--surface-4);
       border-radius: 999px;
       overflow: hidden;
     }
@@ -410,7 +515,7 @@
     }
 
     .lb-highlight {
-      background: #faf5ec;
+      background: var(--surface-3);
       border-radius: 10px;
       padding: 10px 8px;
       margin: 0 -8px;
@@ -418,13 +523,41 @@
 
     .you-tag {
       font-size: 10px;
-      background: #efe5d4;
-      color: #7c5a1c;
+      background: var(--badge-bg);
+      color: var(--badge-text);
       padding: 2px 7px;
       border-radius: 999px;
       margin-left: 6px;
       font-weight: 700;
     }
+
+    .tab-toggle {
+      display: flex;
+      gap: 8px;
+      background: var(--bg-accent);
+      padding: 6px;
+      border-radius: 14px;
+      margin-bottom: 14px;
+      width: fit-content;
+    }
+
+    .tab-toggle button {
+      border: 1px solid transparent;
+      color: var(--text-secondary);
+      padding: 9px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .tab-toggle button.active {
+      background: linear-gradient(135deg, var(--green-600), var(--green-700));
+      color: white;
+    }
+
+    .leaderboard-panel { display: none; }
+    .leaderboard-panel.active { display: block; }
 
     .actions-grid {
       display: grid;
@@ -433,7 +566,7 @@
     }
 
     .action-btn {
-      background: #faf7f1;
+      background: var(--surface-3);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 12px;
@@ -446,9 +579,8 @@
     }
 
     .action-btn:hover {
-      background: #f2ebdf;
-      border-color: #ccbfa9;
       transform: translateY(-1px);
+      border-color: rgba(78, 143, 105, 0.35);
     }
 
     .action-icon {
@@ -460,7 +592,7 @@
       justify-content: center;
       font-size: 17px;
       flex-shrink: 0;
-      background: #f1ebdf;
+      background: var(--surface-4);
     }
 
     .action-text {
@@ -501,9 +633,9 @@
       font-size: 18px;
     }
 
-    .badge-icon.earned { background: #efe7d6; }
+    .badge-icon.earned { background: var(--surface-4); }
     .badge-icon.locked {
-      background: #f2eee6;
+      background: var(--surface-3);
       opacity: 0.55;
       filter: grayscale(1);
     }
@@ -540,13 +672,13 @@
     }
 
     .streak-day.today {
-      background: #f2ebdf;
+      background: var(--surface-4);
       color: var(--green-700);
       border: 1.5px solid var(--green-500);
     }
 
     .streak-day.miss {
-      background: #f3efe8;
+      background: var(--surface-3);
       color: #9ca3af;
     }
 
@@ -592,7 +724,10 @@
       color: var(--text-primary);
     }
 
-    .reward-logo {
+    .reward-logo,
+    .friend-avatar,
+    .history-icon,
+    .perk-icon {
       width: 36px;
       height: 36px;
       border-radius: 10px;
@@ -600,34 +735,81 @@
       align-items: center;
       justify-content: center;
       font-size: 16px;
-      background: #f3ede3;
+      background: var(--surface-4);
+      flex-shrink: 0;
     }
 
-    .reward-info { flex: 1; }
-
-    .reward-name {
+    .friend-avatar {
+      border-radius: 50%;
       font-size: 12px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--green-500), var(--green-700));
+      color: white;
+    }
+
+    .profile-box {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .profile-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--green-500), var(--green-700));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .profile-name {
+      font-size: 20px;
       font-weight: 700;
       color: var(--text-primary);
     }
 
-    .reward-detail {
-      font-size: 11px;
+    .profile-meta {
+      font-size: 13px;
       color: var(--text-secondary);
-      margin-top: 1px;
+      margin-top: 4px;
+      line-height: 1.5;
     }
 
-    .reward-pts {
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .mini-stat {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      background: var(--surface-3);
+    }
+
+    .mini-stat-label {
       font-size: 11px;
-      color: #9a6700;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .mini-stat-value {
+      font-size: 18px;
       font-weight: 700;
-      white-space: nowrap;
+      color: var(--text-primary);
     }
 
     .ideas-card {
-      margin-top: 6px;
-      background: rgba(255,251,245,0.78);
-      border: 1px dashed #d8ccba;
+      background: var(--surface);
+      border: 1px dashed var(--border);
     }
 
     .ideas-list {
@@ -665,9 +847,11 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    @media (max-width: 860px) {
+    @media (max-width: 980px) {
+      .metrics-row,
       .two-col,
-      .metrics-row {
+      .three-col,
+      .profile-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -676,6 +860,7 @@
       .dash { padding: 1rem; }
       .auth-card { padding: 22px; }
       .actions-grid { grid-template-columns: 1fr; }
+      .profile-box { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -696,7 +881,7 @@
       </div>
 
       <div class="auth-title">Login or create account</div>
-      <div class="auth-copy">This demo stores usernames, passwords, and profile data in your browser with localStorage.</div>
+      <div class="auth-copy">This demo stores usernames, passwords, profile data, dark mode, and task history in your browser with localStorage.</div>
 
       <div class="switcher">
         <button id="login-tab" class="active" type="button">Login</button>
@@ -718,7 +903,7 @@
       </form>
 
       <div class="demo-box">
-        <p><strong>Fast demo:</strong> make any username and password, log in, click actions, and refresh to see saved data.</p>
+        <p><strong>Fast demo:</strong> make any username and password, log in, switch tabs, toggle dark mode, log activities, and refresh to see saved data.</p>
       </div>
     </div>
   </section>
@@ -745,321 +930,468 @@
             <div class="avatar" id="avatar">AK</div>
             <span class="user-name" id="display-name">Akhil</span>
           </div>
+          <button id="dark-mode-btn" class="ghost-btn" type="button">Dark mode</button>
           <button id="logout-btn" class="ghost-btn" type="button">Logout</button>
         </div>
       </div>
 
-      <div class="metrics-row">
-        <div class="metric-card">
-          <div class="metric-label">Your total points</div>
-          <div class="metric-val" id="total-pts">1,247</div>
-          <div class="metric-delta" id="pts-delta">+84 this week</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Personal rank</div>
-          <div class="metric-val">#3</div>
-          <div class="metric-delta">Top 10% this week</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Impact score</div>
-          <div class="metric-val" id="co2-val">31.4</div>
-          <div class="metric-delta">+3.2 this week</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Current streak</div>
-          <div class="metric-val" id="streak-val">7 days</div>
-          <div class="metric-delta">Keep it going</div>
-        </div>
+      <div class="nav-row">
+        <button class="nav-btn active" data-page="dashboard-page" type="button">Dashboard</button>
+        <button class="nav-btn" data-page="leaderboard-page" type="button">Leaderboard</button>
+        <button class="nav-btn" data-page="friends-page" type="button">Friends</button>
+        <button class="nav-btn" data-page="community-page" type="button">Community</button>
+        <button class="nav-btn" data-page="profile-page" type="button">Profile</button>
       </div>
 
-      <div class="two-col">
+      <section id="dashboard-page" class="page active">
+        <div class="metrics-row">
+          <div class="metric-card">
+            <div class="metric-label">Your total points</div>
+            <div class="metric-val" id="total-pts">1,247</div>
+            <div class="metric-delta" id="pts-delta">+84 this week</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Personal rank</div>
+            <div class="metric-val">#4</div>
+            <div class="metric-delta">Inside your friend group</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Impact score</div>
+            <div class="metric-val" id="impact-val">31.4</div>
+            <div class="metric-delta">Real actions only</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Current streak</div>
+            <div class="metric-val" id="streak-val">7 days</div>
+            <div class="metric-delta">Keep it going</div>
+          </div>
+        </div>
+
+        <div class="three-col">
+          <div class="card">
+            <div class="card-title">Log a real activity</div>
+            <div class="card-sub">These actions count toward sustainability and community impact.</div>
+            <div class="actions-grid">
+              <button class="action-btn" onclick="logAction(this,'Used reusable bottle',8,'sustainability')">
+                <div class="action-icon">🫙</div>
+                <div>
+                  <div class="action-text">Used reusable bottle</div>
+                  <div class="action-pts">+8 pts</div>
+                </div>
+              </button>
+
+              <button class="action-btn" onclick="logAction(this,'Recycled waste properly',12,'sustainability')">
+                <div class="action-icon">♻️</div>
+                <div>
+                  <div class="action-text">Recycled waste properly</div>
+                  <div class="action-pts">+12 pts</div>
+                </div>
+              </button>
+
+              <button class="action-btn" onclick="logAction(this,'Used public transit',18,'sustainability')">
+                <div class="action-icon">🚌</div>
+                <div>
+                  <div class="action-text">Used public transit</div>
+                  <div class="action-pts">+18 pts</div>
+                </div>
+              </button>
+
+              <button class="action-btn" onclick="logAction(this,'Biked or walked instead of driving',20,'sustainability')">
+                <div class="action-icon">🚲</div>
+                <div>
+                  <div class="action-text">Biked or walked</div>
+                  <div class="action-pts">+20 pts</div>
+                </div>
+              </button>
+
+              <button class="action-btn" onclick="logAction(this,'Reduced energy use in apartment',15,'sustainability')">
+                <div class="action-icon">💡</div>
+                <div>
+                  <div class="action-text">Reduced energy use</div>
+                  <div class="action-pts">+15 pts</div>
+                </div>
+              </button>
+
+              <button class="action-btn" onclick="logAction(this,'Participated in cleanup event',24,'community')">
+                <div class="action-icon">🧹</div>
+                <div>
+                  <div class="action-text">Cleanup event</div>
+                  <div class="action-pts">+24 pts</div>
+                </div>
+              </button>
+
+              <button class="action-btn" onclick="logAction(this,'Community volunteering',22,'community')">
+                <div class="action-icon">🤝</div>
+                <div>
+                  <div class="action-text">Community volunteering</div>
+                  <div class="action-pts">+22 pts</div>
+                </div>
+              </button>
+
+              <button class="action-btn" onclick="logAction(this,'Sustainability workshop attended',16,'community')">
+                <div class="action-icon">🌿</div>
+                <div>
+                  <div class="action-text">Workshop attended</div>
+                  <div class="action-pts">+16 pts</div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Weekly progress</div>
+            <div style="margin-bottom:14px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+                <span style="font-size:12px;color:var(--text-secondary);font-weight:600;">Goal: 200 pts</span>
+                <span style="font-size:12px;font-weight:700;color:var(--green-600);" id="week-label">148 / 200</span>
+              </div>
+              <div style="width:100%;height:9px;background:var(--surface-4);border-radius:999px;overflow:hidden;">
+                <div id="progress-bar" style="height:100%;background:linear-gradient(90deg,var(--green-500),var(--green-700));border-radius:999px;width:74%;transition:width 0.35s;"></div>
+              </div>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="activityChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Recent task history</div>
+            <div id="task-history-list"></div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Activity breakdown</div>
+            <div style="display:flex;align-items:center;gap:16px;">
+              <canvas id="donutChart" width="110" height="110" style="flex-shrink:0;"></canvas>
+              <div style="flex:1;">
+                <div class="ring-item"><div class="ring-dot" style="background:#4e8f69;"></div><div class="ring-item-label">Sustainability</div><div class="ring-item-val" id="cat-sustainability">54%</div></div>
+                <div class="ring-item"><div class="ring-dot" style="background:#c58b4d;"></div><div class="ring-item-label">Community</div><div class="ring-item-val" id="cat-community">31%</div></div>
+                <div class="ring-item"><div class="ring-dot" style="background:#6f8fb8;"></div><div class="ring-item-label">Personal impact</div><div class="ring-item-val" id="cat-personal">15%</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Badges and streak</div>
+            <div class="badges-row">
+              <div class="badge"><div class="badge-icon earned">🌱</div><div class="badge-label">Eco start</div></div>
+              <div class="badge"><div class="badge-icon earned">🔥</div><div class="badge-label">7 day streak</div></div>
+              <div class="badge"><div class="badge-icon earned">🚲</div><div class="badge-label">Low carbon</div></div>
+              <div class="badge"><div class="badge-icon earned">🤝</div><div class="badge-label">Volunteer</div></div>
+              <div class="badge"><div class="badge-icon locked">🏆</div><div class="badge-label">Top rank</div></div>
+              <div class="badge"><div class="badge-icon locked">⭐</div><div class="badge-label">Top community</div></div>
+            </div>
+
+            <div class="section-label">This week's streak</div>
+            <div class="streak-row">
+              <div class="streak-day done">M</div>
+              <div class="streak-day done">T</div>
+              <div class="streak-day done">W</div>
+              <div class="streak-day done">T</div>
+              <div class="streak-day done">F</div>
+              <div class="streak-day today">S</div>
+              <div class="streak-day miss">S</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="leaderboard-page" class="page">
         <div class="card">
-          <div class="card-title">Communities leaderboard</div>
-
-          <div class="leaderboard-row">
-            <div class="lb-rank gold">1</div>
-            <div class="lb-info">
-              <div class="lb-name">Junction 49</div>
-              <div class="lb-meta">Near UNCC, student apartment community</div>
-            </div>
-            <div class="lb-bar-wrap"><div class="lb-bar" style="width:100%"></div></div>
-            <div class="lb-pts">4,980</div>
+          <div class="card-title">Leaderboard</div>
+          <div class="tab-toggle">
+            <button class="lb-switch active" data-panel="community-panel" type="button">Community</button>
+            <button class="lb-switch" data-panel="personal-panel" type="button">Personal</button>
           </div>
 
-          <div class="leaderboard-row lb-highlight">
-            <div class="lb-rank silver">2</div>
-            <div class="lb-info">
-              <div class="lb-name">Arcadia</div>
-              <div class="lb-meta">Neighborhood community leaderboard</div>
-            </div>
-            <div class="lb-bar-wrap"><div class="lb-bar" style="width:90%"></div></div>
-            <div class="lb-pts">4,482</div>
-          </div>
+          <div id="community-panel" class="leaderboard-panel active">
+            <div class="card-sub">Local communities near UNCC and nearby apartments.</div>
 
-          <div class="leaderboard-row">
-            <div class="lb-rank bronze">3</div>
-            <div class="lb-info">
-              <div class="lb-name">The Edge</div>
-              <div class="lb-meta">UNCC area resident group</div>
-            </div>
-            <div class="lb-bar-wrap"><div class="lb-bar" style="width:82%"></div></div>
-            <div class="lb-pts">4,091</div>
-          </div>
-
-          <div class="leaderboard-row">
-            <div class="lb-rank">4</div>
-            <div class="lb-info">
-              <div class="lb-name">University Village</div>
-              <div class="lb-meta">Student housing community</div>
-            </div>
-            <div class="lb-bar-wrap"><div class="lb-bar" style="width:76%"></div></div>
-            <div class="lb-pts">3,786</div>
-          </div>
-
-          <div class="leaderboard-row">
-            <div class="lb-rank">5</div>
-            <div class="lb-info">
-              <div class="lb-name">Rush</div>
-              <div class="lb-meta">Campus area apartment community</div>
-            </div>
-            <div class="lb-bar-wrap"><div class="lb-bar" style="width:70%"></div></div>
-            <div class="lb-pts">3,412</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Log an activity</div>
-          <div class="actions-grid">
-            <button class="action-btn" onclick="logAction(this,'Workout completed',14,'wellness')">
-              <div class="action-icon">💪</div>
-              <div>
-                <div class="action-text">Workout completed</div>
-                <div class="action-pts">+14 pts</div>
+            <div class="leaderboard-row">
+              <div class="lb-rank gold">1</div>
+              <div class="lb-info">
+                <div class="lb-name">Junction 49</div>
+                <div class="lb-meta">Near UNCC, apartment community</div>
               </div>
-            </button>
-
-            <button class="action-btn" onclick="logAction(this,'Read for 30 min',10,'learning')">
-              <div class="action-icon">📚</div>
-              <div>
-                <div class="action-text">Read for 30 min</div>
-                <div class="action-pts">+10 pts</div>
-              </div>
-            </button>
-
-            <button class="action-btn" onclick="logAction(this,'Volunteer hour',20,'community')">
-              <div class="action-icon">🤝</div>
-              <div>
-                <div class="action-text">Volunteer hour</div>
-                <div class="action-pts">+20 pts</div>
-              </div>
-            </button>
-
-            <button class="action-btn" onclick="logAction(this,'Walked 5k steps',12,'wellness')">
-              <div class="action-icon">🚶</div>
-              <div>
-                <div class="action-text">Walked 5k steps</div>
-                <div class="action-pts">+12 pts</div>
-              </div>
-            </button>
-
-            <button class="action-btn" onclick="logAction(this,'Team contribution',16,'community')">
-              <div class="action-icon">🧠</div>
-              <div>
-                <div class="action-text">Team contribution</div>
-                <div class="action-pts">+16 pts</div>
-              </div>
-            </button>
-
-            <button class="action-btn" onclick="logAction(this,'Journal entry',8,'mindset')">
-              <div class="action-icon">✍️</div>
-              <div>
-                <div class="action-text">Journal entry</div>
-                <div class="action-pts">+8 pts</div>
-              </div>
-            </button>
-
-            <button class="action-btn" onclick="logAction(this,'Water goal hit',6,'wellness')">
-              <div class="action-icon">💧</div>
-              <div>
-                <div class="action-text">Water goal hit</div>
-                <div class="action-pts">+6 pts</div>
-              </div>
-            </button>
-
-            <button class="action-btn" onclick="logAction(this,'Skill practice',15,'learning')">
-              <div class="action-icon">💻</div>
-              <div>
-                <div class="action-text">Skill practice</div>
-                <div class="action-pts">+15 pts</div>
-              </div>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="two-col">
-        <div class="card">
-          <div class="card-title">Weekly progress</div>
-          <div style="margin-bottom:14px;">
-            <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-              <span style="font-size:12px;color:var(--text-secondary);font-weight:600;">Goal: 200 pts</span>
-              <span style="font-size:12px;font-weight:700;color:var(--green-600);" id="week-label">148 / 200</span>
+              <div class="lb-bar-wrap"><div class="lb-bar" style="width:100%"></div></div>
+              <div class="lb-pts">4,980</div>
             </div>
-            <div style="width:100%;height:9px;background:#eee6da;border-radius:999px;overflow:hidden;">
-              <div id="progress-bar" style="height:100%;background:linear-gradient(90deg,var(--green-500),var(--green-700));border-radius:999px;width:74%;transition:width 0.35s;"></div>
+
+            <div class="leaderboard-row lb-highlight">
+              <div class="lb-rank silver">2</div>
+              <div class="lb-info">
+                <div class="lb-name">GreenBlocks Central <span class="you-tag">your community</span></div>
+                <div class="lb-meta">Your joined community</div>
+              </div>
+              <div class="lb-bar-wrap"><div class="lb-bar" style="width:91%"></div></div>
+              <div class="lb-pts">4,535</div>
+            </div>
+
+            <div class="leaderboard-row">
+              <div class="lb-rank bronze">3</div>
+              <div class="lb-info">
+                <div class="lb-name">Arcadia</div>
+                <div class="lb-meta">Local neighborhood community</div>
+              </div>
+              <div class="lb-bar-wrap"><div class="lb-bar" style="width:86%"></div></div>
+              <div class="lb-pts">4,278</div>
+            </div>
+
+            <div class="leaderboard-row">
+              <div class="lb-rank">4</div>
+              <div class="lb-info">
+                <div class="lb-name">The Edge</div>
+                <div class="lb-meta">UNCC area resident group</div>
+              </div>
+              <div class="lb-bar-wrap"><div class="lb-bar" style="width:80%"></div></div>
+              <div class="lb-pts">3,992</div>
+            </div>
+
+            <div class="leaderboard-row">
+              <div class="lb-rank">5</div>
+              <div class="lb-info">
+                <div class="lb-name">University Village</div>
+                <div class="lb-meta">Student housing community</div>
+              </div>
+              <div class="lb-bar-wrap"><div class="lb-bar" style="width:74%"></div></div>
+              <div class="lb-pts">3,641</div>
+            </div>
+
+            <div class="leaderboard-row">
+              <div class="lb-rank">6</div>
+              <div class="lb-info">
+                <div class="lb-name">Rush</div>
+                <div class="lb-meta">Campus apartment community</div>
+              </div>
+              <div class="lb-bar-wrap"><div class="lb-bar" style="width:69%"></div></div>
+              <div class="lb-pts">3,402</div>
             </div>
           </div>
-          <div class="chart-wrap">
-            <canvas id="activityChart"></canvas>
-          </div>
-        </div>
 
-        <div class="card">
-          <div class="card-title">Your badges</div>
-          <div class="badges-row">
-            <div class="badge"><div class="badge-icon earned">🌱</div><div class="badge-label">First win</div></div>
-            <div class="badge"><div class="badge-icon earned">🔥</div><div class="badge-label">7 day streak</div></div>
-            <div class="badge"><div class="badge-icon earned">📚</div><div class="badge-label">Reader</div></div>
-            <div class="badge"><div class="badge-icon earned">🤝</div><div class="badge-label">Helper</div></div>
-            <div class="badge"><div class="badge-icon locked">🏆</div><div class="badge-label">Top rank</div></div>
-            <div class="badge"><div class="badge-icon locked">⭐</div><div class="badge-label">Elite week</div></div>
-          </div>
+          <div id="personal-panel" class="leaderboard-panel">
+            <div class="card-sub">Personal ranking against your close network.</div>
 
-          <div class="section-label">This week's streak</div>
-          <div class="streak-row">
-            <div class="streak-day done">M</div>
-            <div class="streak-day done">T</div>
-            <div class="streak-day done">W</div>
-            <div class="streak-day done">T</div>
-            <div class="streak-day done">F</div>
-            <div class="streak-day today">S</div>
-            <div class="streak-day miss">S</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="two-col">
-        <div class="card">
-          <div class="card-title">Personal leaderboard</div>
-
-          <div class="leaderboard-row">
-            <div class="lb-rank gold">1</div>
-            <div class="lb-info">
-              <div class="lb-name">Mia Carter</div>
-              <div class="lb-meta">Wellness + community</div>
+            <div class="leaderboard-row">
+              <div class="lb-rank gold">1</div>
+              <div class="lb-info">
+                <div class="lb-name">Charan Kasireddy</div>
+                <div class="lb-meta">Top sustainability points</div>
+              </div>
+              <div class="lb-bar-wrap"><div class="lb-bar" style="width:100%"></div></div>
+              <div class="lb-pts">1,724</div>
             </div>
-            <div class="lb-bar-wrap"><div class="lb-bar" style="width:100%"></div></div>
-            <div class="lb-pts">1,620</div>
-          </div>
 
-          <div class="leaderboard-row">
-            <div class="lb-rank silver">2</div>
-            <div class="lb-info">
-              <div class="lb-name">Jordan Lee</div>
-              <div class="lb-meta">Learning streak leader</div>
+            <div class="leaderboard-row">
+              <div class="lb-rank silver">2</div>
+              <div class="lb-info">
+                <div class="lb-name">Sowmya Ravuri</div>
+                <div class="lb-meta">Strong weekly consistency</div>
+              </div>
+              <div class="lb-bar-wrap"><div class="lb-bar" style="width:92%"></div></div>
+              <div class="lb-pts">1,581</div>
             </div>
-            <div class="lb-bar-wrap"><div class="lb-bar" style="width:94%"></div></div>
-            <div class="lb-pts">1,520</div>
-          </div>
 
-          <div class="leaderboard-row lb-highlight">
-            <div class="lb-rank bronze">3</div>
-            <div class="lb-info">
-              <div class="lb-name" id="personal-lb-name">Akhil <span class="you-tag">you</span></div>
-              <div class="lb-meta">Strong weekly momentum</div>
+            <div class="leaderboard-row">
+              <div class="lb-rank bronze">3</div>
+              <div class="lb-info">
+                <div class="lb-name">Trishanth Ghattamaneni</div>
+                <div class="lb-meta">Most volunteer events</div>
+              </div>
+              <div class="lb-bar-wrap"><div class="lb-bar" style="width:87%"></div></div>
+              <div class="lb-pts">1,492</div>
             </div>
-            <div class="lb-bar-wrap"><div class="lb-bar" style="width:84%" id="personal-lb-bar"></div></div>
-            <div class="lb-pts" id="personal-lb-points">1,247</div>
-          </div>
 
-          <div class="leaderboard-row">
-            <div class="lb-rank">4</div>
-            <div class="lb-info">
-              <div class="lb-name">Noah Kim</div>
-              <div class="lb-meta">Daily consistency</div>
-            </div>
-            <div class="lb-bar-wrap"><div class="lb-bar" style="width:77%"></div></div>
-            <div class="lb-pts">1,154</div>
-          </div>
-
-          <div class="leaderboard-row">
-            <div class="lb-rank">5</div>
-            <div class="lb-info">
-              <div class="lb-name">Sara Patel</div>
-              <div class="lb-meta">Fast rising this week</div>
-            </div>
-            <div class="lb-bar-wrap"><div class="lb-bar" style="width:72%"></div></div>
-            <div class="lb-pts">1,082</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Activity breakdown</div>
-          <div style="display:flex;align-items:center;gap:16px;">
-            <canvas id="donutChart" width="110" height="110" style="flex-shrink:0;"></canvas>
-            <div style="flex:1;">
-              <div class="ring-item"><div class="ring-dot" style="background:#4e8f69;"></div><div class="ring-item-label">Wellness</div><div class="ring-item-val" id="cat-wellness">34%</div></div>
-              <div class="ring-item"><div class="ring-dot" style="background:#6f8fb8;"></div><div class="ring-item-label">Learning</div><div class="ring-item-val" id="cat-learning">26%</div></div>
-              <div class="ring-item"><div class="ring-dot" style="background:#c58b4d;"></div><div class="ring-item-label">Community</div><div class="ring-item-val" id="cat-community">24%</div></div>
-              <div class="ring-item"><div class="ring-dot" style="background:#c7ced5;"></div><div class="ring-item-label">Mindset</div><div class="ring-item-val" id="cat-mindset">16%</div></div>
+            <div class="leaderboard-row lb-highlight">
+              <div class="lb-rank">4</div>
+              <div class="lb-info">
+                <div class="lb-name" id="personal-lb-name">You <span class="you-tag">you</span></div>
+                <div class="lb-meta">Rising with local actions</div>
+              </div>
+              <div class="lb-bar-wrap"><div class="lb-bar" style="width:73%" id="personal-lb-bar"></div></div>
+              <div class="lb-pts" id="personal-lb-points">1,247</div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="two-col">
-        <div class="card">
-          <div class="card-title">Rewards</div>
+      <section id="friends-page" class="page">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Friends</div>
 
-          <div class="reward-row">
-            <div class="reward-logo">☕</div>
-            <div class="reward-info">
-              <div class="reward-name">Coffee voucher</div>
-              <div class="reward-detail">Free drink reward</div>
+            <div class="friend-row">
+              <div class="lb-rank gold">1</div>
+              <div class="friend-avatar">CK</div>
+              <div class="friend-info">
+                <div class="friend-name">Charan Kasireddy</div>
+                <div class="friend-meta">1st place, top sustainability points</div>
+              </div>
+              <div class="friend-pts">1,724</div>
             </div>
-            <div class="reward-pts">900 pts</div>
+
+            <div class="friend-row">
+              <div class="lb-rank silver">2</div>
+              <div class="friend-avatar">SR</div>
+              <div class="friend-info">
+                <div class="friend-name">Sowmya Ravuri</div>
+                <div class="friend-meta">2nd place, strong weekly streak</div>
+              </div>
+              <div class="friend-pts">1,581</div>
+            </div>
+
+            <div class="friend-row">
+              <div class="lb-rank bronze">3</div>
+              <div class="friend-avatar">TG</div>
+              <div class="friend-info">
+                <div class="friend-name">Trishanth Ghattamaneni</div>
+                <div class="friend-meta">3rd place, most volunteer activity</div>
+              </div>
+              <div class="friend-pts">1,492</div>
+            </div>
+
+            <div class="friend-row lb-highlight">
+              <div class="lb-rank">4</div>
+              <div class="friend-avatar" id="friend-avatar-you">YU</div>
+              <div class="friend-info">
+                <div class="friend-name" id="friend-name-you">You</div>
+                <div class="friend-meta">4th place, growing each week</div>
+              </div>
+              <div class="friend-pts" id="friend-points-you">1,247</div>
+            </div>
           </div>
 
-          <div class="reward-row">
-            <div class="reward-logo">🎟️</div>
-            <div class="reward-info">
-              <div class="reward-name">Event ticket</div>
-              <div class="reward-detail">Monthly raffle entry</div>
+          <div class="card">
+            <div class="card-title">Compare progress</div>
+            <div class="card-sub">You are close to 3rd place. A few more real sustainability actions could move your rank up.</div>
+            <div class="chart-wrap">
+              <canvas id="friendsChart"></canvas>
             </div>
-            <div class="reward-pts">500 pts</div>
-          </div>
-
-          <div class="reward-row">
-            <div class="reward-logo">🛍️</div>
-            <div class="reward-info">
-              <div class="reward-name">Store coupon</div>
-              <div class="reward-detail">$5 off reward</div>
-            </div>
-            <div class="reward-pts">1,200 pts</div>
-          </div>
-
-          <div class="reward-row">
-            <div class="reward-logo">🏅</div>
-            <div class="reward-info">
-              <div class="reward-name">Top member badge</div>
-              <div class="reward-detail">Community recognition</div>
-            </div>
-            <div class="reward-pts">1,500 pts</div>
           </div>
         </div>
+      </section>
 
-        <div class="card ideas-card">
-          <div class="card-title">More ideas to add later</div>
-          <div class="ideas-list">
-            <div><strong>Daily challenges:</strong> one-click task each day with bonus points</div>
-            <div><strong>Profile levels:</strong> level 1, 2, 3 based on points</div>
-            <div><strong>Friends tab:</strong> add friends and compare progress</div>
-            <div><strong>Claim rewards button:</strong> turn points into reward cards</div>
-            <div><strong>Task history:</strong> show recent actions the user logged</div>
-            <div><strong>Admin community view:</strong> simple page for community stats</div>
+      <section id="community-page" class="page">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">My community</div>
+            <div class="profile-box">
+              <div class="profile-avatar">GC</div>
+              <div>
+                <div class="profile-name">GreenBlocks Central</div>
+                <div class="profile-meta">Your joined community, currently ranked #2 locally, close behind Junction 49.</div>
+              </div>
+            </div>
+
+            <div class="profile-grid">
+              <div class="mini-stat">
+                <div class="mini-stat-label">Current rank</div>
+                <div class="mini-stat-value">#2</div>
+              </div>
+              <div class="mini-stat">
+                <div class="mini-stat-label">Community points</div>
+                <div class="mini-stat-value">4,535</div>
+              </div>
+              <div class="mini-stat">
+                <div class="mini-stat-label">Active members</div>
+                <div class="mini-stat-value">108</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Community incentives</div>
+
+            <div class="perk-row">
+              <div class="perk-icon">🥨</div>
+              <div class="perk-info">
+                <div class="perk-name">Free snacks downstairs</div>
+                <div class="perk-detail">Redeem at the front desk snack area</div>
+              </div>
+              <div class="perk-pts">150 pts</div>
+            </div>
+
+            <div class="perk-row">
+              <div class="perk-icon">🥤</div>
+              <div class="perk-info">
+                <div class="perk-name">Vending machine credit</div>
+                <div class="perk-detail">$3 reward credit</div>
+              </div>
+              <div class="perk-pts">300 pts</div>
+            </div>
+
+            <div class="perk-row">
+              <div class="perk-icon">☕</div>
+              <div class="perk-info">
+                <div class="perk-name">Coffee coupon</div>
+                <div class="perk-detail">One free drink</div>
+              </div>
+              <div class="perk-pts">500 pts</div>
+            </div>
+
+            <div class="perk-row">
+              <div class="perk-icon">🎟️</div>
+              <div class="perk-info">
+                <div class="perk-name">Event raffle entry</div>
+                <div class="perk-detail">Monthly giveaway entry</div>
+              </div>
+              <div class="perk-pts">800 pts</div>
+            </div>
+
+            <div class="perk-row">
+              <div class="perk-icon">🛍️</div>
+              <div class="perk-info">
+                <div class="perk-name">Community merch discount</div>
+                <div class="perk-detail">Discount on GreenBlocks items</div>
+              </div>
+              <div class="perk-pts">1200 pts</div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      <section id="profile-page" class="page">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Profile</div>
+            <div class="profile-box">
+              <div class="profile-avatar" id="profile-avatar">AK</div>
+              <div>
+                <div class="profile-name" id="profile-name">Akhil</div>
+                <div class="profile-meta">Member of GreenBlocks Central, ranked #4 in friends, building sustainability points through real actions.</div>
+              </div>
+            </div>
+
+            <div class="profile-grid">
+              <div class="mini-stat">
+                <div class="mini-stat-label">Total points</div>
+                <div class="mini-stat-value" id="profile-points">1,247</div>
+              </div>
+              <div class="mini-stat">
+                <div class="mini-stat-label">Community</div>
+                <div class="mini-stat-value">GC</div>
+              </div>
+              <div class="mini-stat">
+                <div class="mini-stat-label">Friends rank</div>
+                <div class="mini-stat-value">#4</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card ideas-card">
+            <div class="card-title">More things to add later</div>
+            <div class="ideas-list">
+              <div><strong>Proof upload:</strong> add a photo or receipt for actions</div>
+              <div><strong>QR event check-in:</strong> scan to get points at cleanup events</div>
+              <div><strong>Redeem button:</strong> claim the snack or vending rewards</div>
+              <div><strong>Community challenge:</strong> race Junction 49 each week</div>
+              <div><strong>Admin moderation:</strong> approve logged activities</div>
+              <div><strong>Monthly reset:</strong> keep all-time points and fresh monthly ranks</div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -1068,7 +1400,8 @@
   <script>
     const STORAGE_KEYS = {
       users: 'greenblocks_users',
-      session: 'greenblocks_session'
+      session: 'greenblocks_session',
+      theme: 'greenblocks_theme'
     };
 
     const defaultProfile = () => ({
@@ -1077,19 +1410,25 @@
       ptsAdded: 84,
       impact: 31.4,
       streak: 7,
-      activity: [24, 14, 32, 18, 26, 34, 0],
+      activity: [18, 12, 24, 16, 28, 34, 16],
       categories: {
-        wellness: 34,
-        learning: 26,
-        community: 24,
-        mindset: 16
-      }
+        sustainability: 54,
+        community: 31,
+        personal: 15
+      },
+      history: [
+        { name: 'Cleanup event', pts: 24, time: 'Today, 4:20 PM' },
+        { name: 'Used public transit', pts: 18, time: 'Today, 1:05 PM' },
+        { name: 'Reduced energy use', pts: 15, time: 'Yesterday, 8:40 PM' },
+        { name: 'Recycled waste properly', pts: 12, time: 'Yesterday, 3:15 PM' }
+      ]
     });
 
     let authMode = 'login';
     let currentUser = null;
-    let actChart = null;
+    let activityChart = null;
     let donutChart = null;
+    let friendsChart = null;
 
     const authScreen = document.getElementById('auth-screen');
     const app = document.getElementById('app');
@@ -1101,6 +1440,7 @@
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
     const logoutBtn = document.getElementById('logout-btn');
+    const darkModeBtn = document.getElementById('dark-mode-btn');
 
     function getUsers() {
       return JSON.parse(localStorage.getItem(STORAGE_KEYS.users) || '{}');
@@ -1136,7 +1476,9 @@
     }
 
     function initials(name) {
-      return name.slice(0, 2).toUpperCase();
+      const parts = name.trim().split(' ').filter(Boolean);
+      if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+      return (parts[0][0] + parts[1][0]).toUpperCase();
     }
 
     function showToast(msg) {
@@ -1146,19 +1488,28 @@
       setTimeout(() => t.classList.remove('show'), 2200);
     }
 
+    function applyTheme(theme) {
+      document.body.classList.toggle('dark', theme === 'dark');
+      localStorage.setItem(STORAGE_KEYS.theme, theme);
+      darkModeBtn.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+    }
+
+    function toggleTheme() {
+      const current = localStorage.getItem(STORAGE_KEYS.theme) || 'light';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    }
+
     function normalizeCategoryData(categories) {
-      const keys = ['wellness', 'learning', 'community', 'mindset'];
+      const keys = ['sustainability', 'community', 'personal'];
       const values = keys.map(key => categories[key] || 0);
       const total = values.reduce((sum, val) => sum + val, 0) || 1;
 
       return {
-        labels: keys,
         values,
         percentages: {
-          wellness: Math.round((values[0] / total) * 100),
-          learning: Math.round((values[1] / total) * 100),
-          community: Math.round((values[2] / total) * 100),
-          mindset: Math.round((values[3] / total) * 100)
+          sustainability: Math.round((values[0] / total) * 100),
+          community: Math.round((values[1] / total) * 100),
+          personal: Math.round((values[2] / total) * 100)
         }
       };
     }
@@ -1166,53 +1517,43 @@
     function updateCategoryLabels() {
       if (!currentUser) return;
       const categoryData = normalizeCategoryData(currentUser.profile.categories);
-      document.getElementById('cat-wellness').textContent = categoryData.percentages.wellness + '%';
-      document.getElementById('cat-learning').textContent = categoryData.percentages.learning + '%';
+      document.getElementById('cat-sustainability').textContent = categoryData.percentages.sustainability + '%';
       document.getElementById('cat-community').textContent = categoryData.percentages.community + '%';
-      document.getElementById('cat-mindset').textContent = categoryData.percentages.mindset + '%';
+      document.getElementById('cat-personal').textContent = categoryData.percentages.personal + '%';
+    }
+
+    function updateTaskHistory() {
+      if (!currentUser) return;
+      const container = document.getElementById('task-history-list');
+      const history = currentUser.profile.history || [];
+      container.innerHTML = history.slice(0, 6).map(item => `
+        <div class="history-row">
+          <div class="history-icon">✓</div>
+          <div class="history-info">
+            <div class="history-name">${item.name}</div>
+            <div class="history-meta">${item.time}</div>
+          </div>
+          <div class="history-pts">+${item.pts}</div>
+        </div>
+      `).join('');
     }
 
     function updatePersonalLeaderboard() {
       if (!currentUser) return;
       document.getElementById('personal-lb-name').innerHTML = currentUser.username + ' <span class="you-tag">you</span>';
       document.getElementById('personal-lb-points').textContent = currentUser.profile.points.toLocaleString();
-      const width = Math.min(Math.max(Math.round((currentUser.profile.points / 1620) * 100), 25), 100);
+      document.getElementById('friend-name-you').textContent = currentUser.username;
+      document.getElementById('friend-points-you').textContent = currentUser.profile.points.toLocaleString();
+      document.getElementById('friend-avatar-you').textContent = initials(currentUser.username);
+      const width = Math.min(Math.max(Math.round((currentUser.profile.points / 1724) * 100), 25), 100);
       document.getElementById('personal-lb-bar').style.width = width + '%';
     }
 
-    function loadUser(username) {
-      const users = getUsers();
-      const user = users[username];
-      if (!user) return;
-
-      if (!user.profile.categories) {
-        user.profile.categories = {
-          wellness: 34,
-          learning: 26,
-          community: 24,
-          mindset: 16
-        };
-      }
-
-      currentUser = { username, ...user };
-
-      document.getElementById('display-name').textContent = username;
-      document.getElementById('avatar').textContent = initials(username);
-      document.getElementById('total-pts').textContent = currentUser.profile.points.toLocaleString();
-      document.getElementById('pts-delta').textContent = '+' + currentUser.profile.ptsAdded + ' this week';
-      document.getElementById('co2-val').textContent = currentUser.profile.impact.toFixed(1);
-      document.getElementById('streak-val').textContent = currentUser.profile.streak + ' days';
-      document.getElementById('week-label').textContent = currentUser.profile.weekPts + ' / 200';
-
-      const pct = Math.min(Math.round((currentUser.profile.weekPts / 200) * 100), 100);
-      document.getElementById('progress-bar').style.width = pct + '%';
-
-      updatePersonalLeaderboard();
-      updateCategoryLabels();
-
-      authScreen.classList.add('hidden');
-      app.classList.remove('hidden');
-      renderCharts();
+    function updateProfilePage() {
+      if (!currentUser) return;
+      document.getElementById('profile-avatar').textContent = initials(currentUser.username);
+      document.getElementById('profile-name').textContent = currentUser.username;
+      document.getElementById('profile-points').textContent = currentUser.profile.points.toLocaleString();
     }
 
     function persistCurrentUser() {
@@ -1228,11 +1569,16 @@
     function renderCharts() {
       const activityEl = document.getElementById('activityChart');
       const donutEl = document.getElementById('donutChart');
+      const friendsEl = document.getElementById('friendsChart');
 
-      if (actChart) actChart.destroy();
+      if (activityChart) activityChart.destroy();
       if (donutChart) donutChart.destroy();
+      if (friendsChart) friendsChart.destroy();
 
-      actChart = new Chart(activityEl.getContext('2d'), {
+      const tickColor = getComputedStyle(document.body).getPropertyValue('--text-secondary').trim() || '#6b7280';
+      const gridColor = document.body.classList.contains('dark') ? 'rgba(255,255,255,0.08)' : 'rgba(31,41,55,0.06)';
+
+      activityChart = new Chart(activityEl.getContext('2d'), {
         type: 'bar',
         data: {
           labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -1247,17 +1593,15 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false }
-          },
+          plugins: { legend: { display: false } },
           scales: {
             x: {
               grid: { display: false },
-              ticks: { font: { size: 11, weight: '600' }, color: '#6b7280' }
+              ticks: { font: { size: 11, weight: '600' }, color: tickColor }
             },
             y: {
-              grid: { color: 'rgba(31,41,55,0.06)' },
-              ticks: { font: { size: 11, weight: '600' }, color: '#6b7280' },
+              grid: { color: gridColor },
+              ticks: { font: { size: 11, weight: '600' }, color: tickColor },
               beginAtZero: true
             }
           }
@@ -1271,19 +1615,80 @@
         data: {
           datasets: [{
             data: categoryData.values,
-            backgroundColor: ['#4e8f69', '#6f8fb8', '#c58b4d', '#c7ced5'],
-            borderWidth: 0,
-            hoverOffset: 4
+            backgroundColor: ['#4e8f69', '#c58b4d', '#6f8fb8'],
+            borderWidth: 0
           }]
         },
         options: {
           responsive: false,
           cutout: '68%',
-          plugins: {
-            legend: { display: false }
+          plugins: { legend: { display: false } }
+        }
+      });
+
+      friendsChart = new Chart(friendsEl.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: ['Charan', 'Sowmya', 'Trishanth', currentUser.username],
+          datasets: [{
+            data: [1724, 1581, 1492, currentUser.profile.points],
+            backgroundColor: ['#4e8f69', '#6f8fb8', '#c58b4d', '#8aa39a'],
+            borderRadius: 8,
+            borderSkipped: false
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { font: { size: 11, weight: '600' }, color: tickColor }
+            },
+            y: {
+              grid: { color: gridColor },
+              ticks: { font: { size: 11, weight: '600' }, color: tickColor },
+              beginAtZero: true
+            }
           }
         }
       });
+    }
+
+    function loadUser(username) {
+      const users = getUsers();
+      const user = users[username];
+      if (!user) return;
+
+      if (!user.profile.categories) {
+        user.profile.categories = { sustainability: 54, community: 31, personal: 15 };
+      }
+      if (!user.profile.history) {
+        user.profile.history = defaultProfile().history;
+      }
+
+      currentUser = { username, ...user };
+
+      document.getElementById('display-name').textContent = username;
+      document.getElementById('avatar').textContent = initials(username);
+      document.getElementById('total-pts').textContent = currentUser.profile.points.toLocaleString();
+      document.getElementById('pts-delta').textContent = '+' + currentUser.profile.ptsAdded + ' this week';
+      document.getElementById('impact-val').textContent = currentUser.profile.impact.toFixed(1);
+      document.getElementById('streak-val').textContent = currentUser.profile.streak + ' days';
+      document.getElementById('week-label').textContent = currentUser.profile.weekPts + ' / 200';
+
+      const pct = Math.min(Math.round((currentUser.profile.weekPts / 200) * 100), 100);
+      document.getElementById('progress-bar').style.width = pct + '%';
+
+      updateCategoryLabels();
+      updateTaskHistory();
+      updatePersonalLeaderboard();
+      updateProfilePage();
+
+      authScreen.classList.add('hidden');
+      app.classList.remove('hidden');
+      renderCharts();
     }
 
     function logAction(el, name, pts, category) {
@@ -1292,35 +1697,42 @@
       currentUser.profile.points += pts;
       currentUser.profile.weekPts += pts;
       currentUser.profile.ptsAdded += pts;
-      currentUser.profile.impact = +(currentUser.profile.impact + pts * 0.04).toFixed(1);
+      currentUser.profile.impact = +(currentUser.profile.impact + pts * 0.05).toFixed(1);
       currentUser.profile.activity[5] += pts;
 
-      if (!currentUser.profile.categories[category]) {
-        currentUser.profile.categories[category] = 0;
-      }
+      if (!currentUser.profile.categories[category]) currentUser.profile.categories[category] = 0;
       currentUser.profile.categories[category] += pts;
+
+      currentUser.profile.history.unshift({
+        name,
+        pts,
+        time: 'Just now'
+      });
+      currentUser.profile.history = currentUser.profile.history.slice(0, 10);
 
       document.getElementById('total-pts').textContent = currentUser.profile.points.toLocaleString();
       document.getElementById('pts-delta').textContent = '+' + currentUser.profile.ptsAdded + ' this week';
-      document.getElementById('co2-val').textContent = currentUser.profile.impact.toFixed(1);
+      document.getElementById('impact-val').textContent = currentUser.profile.impact.toFixed(1);
       document.getElementById('week-label').textContent = currentUser.profile.weekPts + ' / 200';
+      document.getElementById('profile-points').textContent = currentUser.profile.points.toLocaleString();
 
       const pct = Math.min(Math.round((currentUser.profile.weekPts / 200) * 100), 100);
       document.getElementById('progress-bar').style.width = pct + '%';
 
-      el.style.background = '#f2ebdf';
-      el.style.borderColor = '#ccbfa9';
+      el.style.background = 'rgba(78,143,105,0.16)';
+      el.style.borderColor = 'rgba(78,143,105,0.45)';
       setTimeout(() => {
         el.style.background = '';
         el.style.borderColor = '';
       }, 700);
 
-      updatePersonalLeaderboard();
       updateCategoryLabels();
+      updateTaskHistory();
+      updatePersonalLeaderboard();
 
-      if (actChart) {
-        actChart.data.datasets[0].data = currentUser.profile.activity;
-        actChart.update();
+      if (activityChart) {
+        activityChart.data.datasets[0].data = currentUser.profile.activity;
+        activityChart.update();
       }
 
       if (donutChart) {
@@ -1329,14 +1741,50 @@
         donutChart.update();
       }
 
+      if (friendsChart) {
+        friendsChart.data.datasets[0].data = [1724, 1581, 1492, currentUser.profile.points];
+        friendsChart.data.labels = ['Charan', 'Sowmya', 'Trishanth', currentUser.username];
+        friendsChart.update();
+      }
+
       persistCurrentUser();
       showToast('+' + pts + ' pts, ' + name + ' logged');
+    }
+
+    function switchPage(pageId) {
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      document.querySelector(`.nav-btn[data-page="${pageId}"]`).classList.add('active');
+      if (currentUser) {
+        setTimeout(renderCharts, 50);
+      }
+    }
+
+    function switchLeaderboard(panelId) {
+      document.querySelectorAll('.leaderboard-panel').forEach(panel => panel.classList.remove('active'));
+      document.querySelectorAll('.lb-switch').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(panelId).classList.add('active');
+      document.querySelector(`.lb-switch[data-panel="${panelId}"]`).classList.add('active');
     }
 
     window.logAction = logAction;
 
     loginTab.addEventListener('click', () => setMode('login'));
     registerTab.addEventListener('click', () => setMode('register'));
+
+    darkModeBtn.addEventListener('click', () => {
+      toggleTheme();
+      if (currentUser) setTimeout(renderCharts, 80);
+    });
+
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchPage(btn.dataset.page));
+    });
+
+    document.querySelectorAll('.lb-switch').forEach(btn => {
+      btn.addEventListener('click', () => switchLeaderboard(btn.dataset.panel));
+    });
 
     authForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -1390,7 +1838,10 @@
     });
 
     window.addEventListener('load', () => {
+      const savedTheme = localStorage.getItem(STORAGE_KEYS.theme) || 'light';
+      applyTheme(savedTheme);
       setMode('login');
+
       const sessionUser = getSession();
       const users = getUsers();
       if (sessionUser && users[sessionUser]) {
