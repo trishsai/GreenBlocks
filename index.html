@@ -10,13 +10,13 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg-main: #f7f4ee;
+      --bg-main: #f7f3ec;
       --bg-soft: #fcfaf6;
-      --bg-accent: #f2ede3;
-      --surface: rgba(255,255,255,0.86);
+      --bg-accent: #f1eadf;
+      --surface: rgba(255,255,255,0.88);
       --surface-2: #fffdf9;
-      --surface-3: #faf5ec;
-      --surface-4: #f3ede3;
+      --surface-3: #faf4ea;
+      --surface-4: #f2eadd;
       --green-500: #4e8f69;
       --green-600: #3f7958;
       --green-700: #2d5f43;
@@ -29,13 +29,15 @@
       --gold: #b7791f;
       --silver: #6b7280;
       --bronze: #9a5b35;
+      --danger: #c2410c;
+      --danger-bg: #fff0ea;
     }
 
     body.dark {
       --bg-main: #11161b;
       --bg-soft: #171d23;
       --bg-accent: #202832;
-      --surface: rgba(26, 33, 40, 0.92);
+      --surface: rgba(26, 33, 40, 0.94);
       --surface-2: #1b232b;
       --surface-3: #212a33;
       --surface-4: #26303a;
@@ -48,6 +50,8 @@
       --gold: #e4bf65;
       --silver: #b6c0cb;
       --bronze: #d19a70;
+      --danger: #ff9b6a;
+      --danger-bg: #33211a;
     }
 
     body {
@@ -74,7 +78,9 @@
     .user-pill,
     .nav-btn,
     .ghost-btn,
-    .tab-toggle button {
+    .tab-toggle button,
+    .modal-card,
+    .mini-banner {
       background: var(--surface);
       backdrop-filter: blur(8px);
     }
@@ -155,7 +161,7 @@
     }
 
     .switcher button.active {
-      background: rgba(255,255,255,0.95);
+      background: rgba(255,255,255,0.96);
       color: #1f2937;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
@@ -195,18 +201,39 @@
       box-shadow: 0 0 0 3px rgba(78, 143, 105, 0.14);
     }
 
-    .primary-btn {
-      width: 100%;
+    .primary-btn,
+    .soft-green-btn,
+    .danger-btn {
       border: none;
-      background: linear-gradient(135deg, var(--green-600), var(--green-700));
-      color: white;
       padding: 14px 16px;
       border-radius: 14px;
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    .primary-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--green-600), var(--green-700));
+      color: white;
       margin-top: 6px;
     }
+
+    .soft-green-btn {
+      background: linear-gradient(135deg, var(--green-600), var(--green-700));
+      color: white;
+    }
+
+    .danger-btn {
+      background: var(--danger-bg);
+      color: var(--danger);
+      border: 1px solid rgba(194, 65, 12, 0.20);
+    }
+
+    .primary-btn:hover,
+    .soft-green-btn:hover,
+    .danger-btn:hover { transform: translateY(-1px); }
 
     .demo-box {
       margin-top: 18px;
@@ -236,7 +263,7 @@
 
     .dash {
       padding: 2rem 1.5rem 4rem;
-      max-width: 1180px;
+      max-width: 1220px;
       margin: 0 auto;
     }
 
@@ -299,17 +326,22 @@
       padding: 5px 14px 5px 6px;
     }
 
+    .avatar,
+    .friend-avatar,
+    .profile-avatar {
+      background: linear-gradient(135deg, var(--green-500), var(--green-700));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
     .avatar {
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--green-500), var(--green-700));
-      display: flex;
-      align-items: center;
-      justify-content: center;
       font-size: 11px;
-      font-weight: 700;
-      color: white;
     }
 
     .user-name {
@@ -388,19 +420,15 @@
       font-weight: 600;
     }
 
-    .two-col {
+    .two-col,
+    .three-col {
       display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: 14px;
       margin-bottom: 14px;
     }
 
-    .three-col {
-      display: grid;
-      grid-template-columns: 1.05fr 1fr 0.95fr;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
+    .two-col { grid-template-columns: 1fr 1fr; }
+    .three-col { grid-template-columns: 1.1fr 1fr 0.9fr; }
 
     .card {
       border: 1px solid var(--border);
@@ -413,7 +441,7 @@
       font-size: 15px;
       font-weight: 700;
       color: var(--text-primary);
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
     .card-sub {
@@ -423,11 +451,33 @@
       line-height: 1.5;
     }
 
+    .mini-banner {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .mini-banner-title {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--text-primary);
+    }
+
+    .mini-banner-copy {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
     .leaderboard-row,
     .reward-row,
     .history-row,
     .friend-row,
-    .perk-row {
+    .perk-row,
+    .update-row,
+    .task-row {
       display: flex;
       align-items: center;
       gap: 10px;
@@ -439,7 +489,9 @@
     .reward-row:last-child,
     .history-row:last-child,
     .friend-row:last-child,
-    .perk-row:last-child {
+    .perk-row:last-child,
+    .update-row:last-child,
+    .task-row:last-child {
       border-bottom: none;
     }
 
@@ -459,7 +511,9 @@
     .reward-info,
     .friend-info,
     .history-info,
-    .perk-info {
+    .perk-info,
+    .update-info,
+    .task-info {
       flex: 1;
     }
 
@@ -467,7 +521,9 @@
     .reward-name,
     .friend-name,
     .history-name,
-    .perk-name {
+    .perk-name,
+    .update-name,
+    .task-name {
       font-size: 13px;
       font-weight: 600;
       color: var(--text-primary);
@@ -477,21 +533,25 @@
     .reward-detail,
     .friend-meta,
     .history-meta,
-    .perk-detail {
+    .perk-detail,
+    .update-meta,
+    .task-meta {
       font-size: 11px;
       color: var(--text-secondary);
       margin-top: 2px;
+      line-height: 1.4;
     }
 
     .lb-pts,
     .reward-pts,
     .friend-pts,
     .history-pts,
-    .perk-pts {
+    .perk-pts,
+    .task-pts {
       font-size: 13px;
       font-weight: 700;
       color: var(--green-600);
-      min-width: 52px;
+      min-width: 54px;
       text-align: right;
     }
 
@@ -521,7 +581,8 @@
       margin: 0 -8px;
     }
 
-    .you-tag {
+    .you-tag,
+    .tag {
       font-size: 10px;
       background: var(--badge-bg);
       color: var(--badge-text);
@@ -529,7 +590,10 @@
       border-radius: 999px;
       margin-left: 6px;
       font-weight: 700;
+      white-space: nowrap;
     }
+
+    .tag { margin-left: 0; }
 
     .tab-toggle {
       display: flex;
@@ -571,7 +635,7 @@
       border-radius: 14px;
       padding: 12px;
       cursor: pointer;
-      transition: background 0.15s, border-color 0.15s, transform 0.15s;
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -583,16 +647,27 @@
       border-color: rgba(78, 143, 105, 0.35);
     }
 
-    .action-icon {
-      width: 34px;
-      height: 34px;
+    .action-icon,
+    .reward-logo,
+    .history-icon,
+    .perk-icon,
+    .update-icon,
+    .task-icon {
+      width: 36px;
+      height: 36px;
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 17px;
-      flex-shrink: 0;
+      font-size: 16px;
       background: var(--surface-4);
+      flex-shrink: 0;
+    }
+
+    .action-icon {
+      width: 34px;
+      height: 34px;
+      font-size: 17px;
     }
 
     .action-text {
@@ -644,7 +719,7 @@
       font-size: 10px;
       color: var(--text-secondary);
       text-align: center;
-      max-width: 54px;
+      max-width: 62px;
       line-height: 1.25;
       font-weight: 600;
     }
@@ -694,7 +769,7 @@
     .chart-wrap {
       position: relative;
       width: 100%;
-      height: 160px;
+      height: 170px;
     }
 
     .ring-item {
@@ -724,27 +799,11 @@
       color: var(--text-primary);
     }
 
-    .reward-logo,
-    .friend-avatar,
-    .history-icon,
-    .perk-icon {
+    .friend-avatar {
       width: 36px;
       height: 36px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      background: var(--surface-4);
-      flex-shrink: 0;
-    }
-
-    .friend-avatar {
       border-radius: 50%;
       font-size: 12px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--green-500), var(--green-700));
-      color: white;
     }
 
     .profile-box {
@@ -759,13 +818,7 @@
       width: 64px;
       height: 64px;
       border-radius: 18px;
-      background: linear-gradient(135deg, var(--green-500), var(--green-700));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
       font-size: 24px;
-      font-weight: 700;
     }
 
     .profile-name {
@@ -781,7 +834,8 @@
       line-height: 1.5;
     }
 
-    .profile-grid {
+    .profile-grid,
+    .reward-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
@@ -807,6 +861,88 @@
       color: var(--text-primary);
     }
 
+    .progress-shell {
+      margin-top: 12px;
+      margin-bottom: 10px;
+    }
+
+    .progress-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: var(--surface-4);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--green-500), var(--green-700));
+      transition: width 0.35s ease;
+    }
+
+    .reward-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      background: var(--surface-2);
+    }
+
+    .reward-card-head {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+
+    .reward-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+
+    .reward-card-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .reward-note {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .reward-claim-btn {
+      width: 100%;
+      margin-top: 12px;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--green-600), var(--green-700));
+      color: white;
+    }
+
+    .reward-claim-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
     .ideas-card {
       background: var(--surface);
       border: 1px dashed var(--border);
@@ -822,6 +958,13 @@
 
     .ideas-list strong {
       color: var(--text-primary);
+    }
+
+    .inline-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
     }
 
     .toast {
@@ -847,11 +990,76 @@
       transform: translateX(-50%) translateY(0);
     }
 
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 9999;
+    }
+
+    .modal.show { display: flex; }
+
+    .modal-card {
+      width: 100%;
+      max-width: 420px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .modal-copy {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    .ad-box {
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--surface-3);
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .ad-count {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .ad-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
     @media (max-width: 980px) {
       .metrics-row,
       .two-col,
       .three-col,
-      .profile-grid {
+      .profile-grid,
+      .reward-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -861,6 +1069,7 @@
       .auth-card { padding: 22px; }
       .actions-grid { grid-template-columns: 1fr; }
       .profile-box { grid-template-columns: 1fr; }
+      .modal-actions { flex-direction: column; }
     }
   </style>
 </head>
@@ -876,12 +1085,12 @@
         </div>
         <div>
           <div class="brand-title">GreenBlocks</div>
-          <div class="brand-sub">Fast prototype with local login</div>
+          <div class="brand-sub">Fast local prototype</div>
         </div>
       </div>
 
       <div class="auth-title">Login or create account</div>
-      <div class="auth-copy">This demo stores usernames, passwords, profile data, dark mode, and task history in your browser with localStorage.</div>
+      <div class="auth-copy">This stores usernames, passwords, points, rewards, dark mode, and activity history in your browser with localStorage.</div>
 
       <div class="switcher">
         <button id="login-tab" class="active" type="button">Login</button>
@@ -903,7 +1112,7 @@
       </form>
 
       <div class="demo-box">
-        <p><strong>Fast demo:</strong> make any username and password, log in, switch tabs, toggle dark mode, log activities, and refresh to see saved data.</p>
+        <p><strong>Prototype flow:</strong> make an account, log sustainability actions, switch tabs, try rewards, try dark mode, and refresh to see saved state.</p>
       </div>
     </div>
   </section>
@@ -920,7 +1129,7 @@
           </div>
           <div>
             <div class="logo-text">GreenBlocks</div>
-            <div class="logo-sub">Community impact prototype</div>
+            <div class="logo-sub">Local impact and rewards</div>
           </div>
         </div>
 
@@ -939,7 +1148,8 @@
         <button class="nav-btn active" data-page="dashboard-page" type="button">Dashboard</button>
         <button class="nav-btn" data-page="leaderboard-page" type="button">Leaderboard</button>
         <button class="nav-btn" data-page="friends-page" type="button">Friends</button>
-        <button class="nav-btn" data-page="community-page" type="button">Community</button>
+        <button class="nav-btn" data-page="community-page" type="button">My Community</button>
+        <button class="nav-btn" data-page="rewards-page" type="button">Rewards</button>
         <button class="nav-btn" data-page="profile-page" type="button">Profile</button>
       </div>
 
@@ -951,26 +1161,27 @@
             <div class="metric-delta" id="pts-delta">+84 this week</div>
           </div>
           <div class="metric-card">
-            <div class="metric-label">Personal rank</div>
+            <div class="metric-label">Friend rank</div>
             <div class="metric-val">#4</div>
-            <div class="metric-delta">Inside your friend group</div>
+            <div class="metric-delta">Close to 3rd place</div>
           </div>
           <div class="metric-card">
             <div class="metric-label">Impact score</div>
             <div class="metric-val" id="impact-val">31.4</div>
-            <div class="metric-delta">Real actions only</div>
+            <div class="metric-delta">Based on real actions</div>
           </div>
           <div class="metric-card">
             <div class="metric-label">Current streak</div>
             <div class="metric-val" id="streak-val">7 days</div>
-            <div class="metric-delta">Keep it going</div>
+            <div class="metric-delta">Stay active today</div>
           </div>
         </div>
 
         <div class="three-col">
           <div class="card">
             <div class="card-title">Log a real activity</div>
-            <div class="card-sub">These actions count toward sustainability and community impact.</div>
+            <div class="card-sub">Only sustainability, energy, transport, recycling, and local service actions count here.</div>
+
             <div class="actions-grid">
               <button class="action-btn" onclick="logAction(this,'Used reusable bottle',8,'sustainability')">
                 <div class="action-icon">🫙</div>
@@ -988,7 +1199,7 @@
                 </div>
               </button>
 
-              <button class="action-btn" onclick="logAction(this,'Used public transit',18,'sustainability')">
+              <button class="action-btn" onclick="logAction(this,'Used public transit',18,'transport')">
                 <div class="action-icon">🚌</div>
                 <div>
                   <div class="action-text">Used public transit</div>
@@ -996,7 +1207,7 @@
                 </div>
               </button>
 
-              <button class="action-btn" onclick="logAction(this,'Biked or walked instead of driving',20,'sustainability')">
+              <button class="action-btn" onclick="logAction(this,'Biked or walked instead of driving',20,'transport')">
                 <div class="action-icon">🚲</div>
                 <div>
                   <div class="action-text">Biked or walked</div>
@@ -1004,7 +1215,7 @@
                 </div>
               </button>
 
-              <button class="action-btn" onclick="logAction(this,'Reduced energy use in apartment',15,'sustainability')">
+              <button class="action-btn" onclick="logAction(this,'Reduced apartment energy use',15,'energy')">
                 <div class="action-icon">💡</div>
                 <div>
                   <div class="action-text">Reduced energy use</div>
@@ -1012,7 +1223,7 @@
                 </div>
               </button>
 
-              <button class="action-btn" onclick="logAction(this,'Participated in cleanup event',24,'community')">
+              <button class="action-btn" onclick="logAction(this,'Cleanup event participation',24,'community')">
                 <div class="action-icon">🧹</div>
                 <div>
                   <div class="action-text">Cleanup event</div>
@@ -1040,13 +1251,13 @@
 
           <div class="card">
             <div class="card-title">Weekly progress</div>
-            <div style="margin-bottom:14px;">
-              <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-                <span style="font-size:12px;color:var(--text-secondary);font-weight:600;">Goal: 200 pts</span>
-                <span style="font-size:12px;font-weight:700;color:var(--green-600);" id="week-label">148 / 200</span>
+            <div class="progress-shell">
+              <div class="progress-head">
+                <span>Goal: 200 pts</span>
+                <span id="week-label">148 / 200</span>
               </div>
-              <div style="width:100%;height:9px;background:var(--surface-4);border-radius:999px;overflow:hidden;">
-                <div id="progress-bar" style="height:100%;background:linear-gradient(90deg,var(--green-500),var(--green-700));border-radius:999px;width:74%;transition:width 0.35s;"></div>
+              <div class="progress-track">
+                <div id="progress-bar" class="progress-fill" style="width:74%"></div>
               </div>
             </div>
             <div class="chart-wrap">
@@ -1066,9 +1277,10 @@
             <div style="display:flex;align-items:center;gap:16px;">
               <canvas id="donutChart" width="110" height="110" style="flex-shrink:0;"></canvas>
               <div style="flex:1;">
-                <div class="ring-item"><div class="ring-dot" style="background:#4e8f69;"></div><div class="ring-item-label">Sustainability</div><div class="ring-item-val" id="cat-sustainability">54%</div></div>
-                <div class="ring-item"><div class="ring-dot" style="background:#c58b4d;"></div><div class="ring-item-label">Community</div><div class="ring-item-val" id="cat-community">31%</div></div>
-                <div class="ring-item"><div class="ring-dot" style="background:#6f8fb8;"></div><div class="ring-item-label">Personal impact</div><div class="ring-item-val" id="cat-personal">15%</div></div>
+                <div class="ring-item"><div class="ring-dot" style="background:#4e8f69;"></div><div class="ring-item-label">Sustainability</div><div class="ring-item-val" id="cat-sustainability">42%</div></div>
+                <div class="ring-item"><div class="ring-dot" style="background:#6f8fb8;"></div><div class="ring-item-label">Transport</div><div class="ring-item-val" id="cat-transport">20%</div></div>
+                <div class="ring-item"><div class="ring-dot" style="background:#c58b4d;"></div><div class="ring-item-label">Community</div><div class="ring-item-val" id="cat-community">23%</div></div>
+                <div class="ring-item"><div class="ring-dot" style="background:#9aa8b2;"></div><div class="ring-item-label">Energy</div><div class="ring-item-val" id="cat-energy">15%</div></div>
               </div>
             </div>
           </div>
@@ -1080,11 +1292,11 @@
               <div class="badge"><div class="badge-icon earned">🔥</div><div class="badge-label">7 day streak</div></div>
               <div class="badge"><div class="badge-icon earned">🚲</div><div class="badge-label">Low carbon</div></div>
               <div class="badge"><div class="badge-icon earned">🤝</div><div class="badge-label">Volunteer</div></div>
-              <div class="badge"><div class="badge-icon locked">🏆</div><div class="badge-label">Top rank</div></div>
-              <div class="badge"><div class="badge-icon locked">⭐</div><div class="badge-label">Top community</div></div>
+              <div class="badge"><div class="badge-icon locked">🏆</div><div class="badge-label">Top local</div></div>
+              <div class="badge"><div class="badge-icon locked">⭐</div><div class="badge-label">Gold tier</div></div>
             </div>
 
-            <div class="section-label">This week's streak</div>
+            <div class="section-label">This week</div>
             <div class="streak-row">
               <div class="streak-day done">M</div>
               <div class="streak-day done">T</div>
@@ -1093,6 +1305,11 @@
               <div class="streak-day done">F</div>
               <div class="streak-day today">S</div>
               <div class="streak-day miss">S</div>
+            </div>
+
+            <div class="mini-banner" style="margin-top:14px;">
+              <div class="mini-banner-title">Reward tip</div>
+              <div class="mini-banner-copy">Your points already unlock snack and vending rewards. Open the Rewards tab to claim.</div>
             </div>
           </div>
         </div>
@@ -1107,7 +1324,7 @@
           </div>
 
           <div id="community-panel" class="leaderboard-panel active">
-            <div class="card-sub">Local communities near UNCC and nearby apartments.</div>
+            <div class="card-sub">Local communities around the UNCC area.</div>
 
             <div class="leaderboard-row">
               <div class="lb-rank gold">1</div>
@@ -1171,7 +1388,7 @@
           </div>
 
           <div id="personal-panel" class="leaderboard-panel">
-            <div class="card-sub">Personal ranking against your close network.</div>
+            <div class="card-sub">Ranking inside your close network.</div>
 
             <div class="leaderboard-row">
               <div class="lb-rank gold">1</div>
@@ -1187,7 +1404,7 @@
               <div class="lb-rank silver">2</div>
               <div class="lb-info">
                 <div class="lb-name">Sowmya Ravuri</div>
-                <div class="lb-meta">Strong weekly consistency</div>
+                <div class="lb-meta">Strong weekly streak</div>
               </div>
               <div class="lb-bar-wrap"><div class="lb-bar" style="width:92%"></div></div>
               <div class="lb-pts">1,581</div>
@@ -1226,7 +1443,7 @@
               <div class="friend-avatar">CK</div>
               <div class="friend-info">
                 <div class="friend-name">Charan Kasireddy</div>
-                <div class="friend-meta">1st place, top sustainability points</div>
+                <div class="friend-meta">Top sustainability points</div>
               </div>
               <div class="friend-pts">1,724</div>
             </div>
@@ -1236,7 +1453,7 @@
               <div class="friend-avatar">SR</div>
               <div class="friend-info">
                 <div class="friend-name">Sowmya Ravuri</div>
-                <div class="friend-meta">2nd place, strong weekly streak</div>
+                <div class="friend-meta">Strong weekly streak</div>
               </div>
               <div class="friend-pts">1,581</div>
             </div>
@@ -1246,7 +1463,7 @@
               <div class="friend-avatar">TG</div>
               <div class="friend-info">
                 <div class="friend-name">Trishanth Ghattamaneni</div>
-                <div class="friend-meta">3rd place, most volunteer activity</div>
+                <div class="friend-meta">Most volunteer activity</div>
               </div>
               <div class="friend-pts">1,492</div>
             </div>
@@ -1256,7 +1473,7 @@
               <div class="friend-avatar" id="friend-avatar-you">YU</div>
               <div class="friend-info">
                 <div class="friend-name" id="friend-name-you">You</div>
-                <div class="friend-meta">4th place, growing each week</div>
+                <div class="friend-meta">4th place, gaining momentum</div>
               </div>
               <div class="friend-pts" id="friend-points-you">1,247</div>
             </div>
@@ -1264,7 +1481,7 @@
 
           <div class="card">
             <div class="card-title">Compare progress</div>
-            <div class="card-sub">You are close to 3rd place. A few more real sustainability actions could move your rank up.</div>
+            <div class="card-sub">You are close to 3rd place. A few strong transport or cleanup actions could move you up.</div>
             <div class="chart-wrap">
               <canvas id="friendsChart"></canvas>
             </div>
@@ -1276,18 +1493,19 @@
         <div class="two-col">
           <div class="card">
             <div class="card-title">My community</div>
+
             <div class="profile-box">
               <div class="profile-avatar">GC</div>
               <div>
-                <div class="profile-name">GreenBlocks Central</div>
-                <div class="profile-meta">Your joined community, currently ranked #2 locally, close behind Junction 49.</div>
+                <div class="profile-name" id="community-name">GreenBlocks Central</div>
+                <div class="profile-meta" id="community-meta">Your joined community, ranked #2 locally, and closing the gap on Junction 49.</div>
               </div>
             </div>
 
             <div class="profile-grid">
               <div class="mini-stat">
                 <div class="mini-stat-label">Current rank</div>
-                <div class="mini-stat-value">#2</div>
+                <div class="mini-stat-value" id="community-rank">#2</div>
               </div>
               <div class="mini-stat">
                 <div class="mini-stat-label">Community points</div>
@@ -1298,55 +1516,198 @@
                 <div class="mini-stat-value">108</div>
               </div>
             </div>
+
+            <div class="progress-shell">
+              <div class="progress-head">
+                <span>Tier progress</span>
+                <span id="tier-label">Silver, 253 pts to Gold</span>
+              </div>
+              <div class="progress-track">
+                <div id="tier-bar" class="progress-fill" style="width:76%"></div>
+              </div>
+            </div>
+
+            <div class="mini-banner">
+              <div class="mini-banner-title">Next week unlock</div>
+              <div class="mini-banner-copy" id="tier-next-copy">If your community reaches Gold, next week members get double vending credits on one reward claim.</div>
+            </div>
+
+            <div class="inline-actions">
+              <button class="soft-green-btn" type="button" onclick="showToast('Community settings opened')">Manage notifications</button>
+              <button class="danger-btn" type="button" onclick="leaveCommunity()">Leave community</button>
+            </div>
           </div>
 
           <div class="card">
-            <div class="card-title">Community incentives</div>
+            <div class="card-title">Local community updates</div>
 
-            <div class="perk-row">
-              <div class="perk-icon">🥨</div>
-              <div class="perk-info">
-                <div class="perk-name">Free snacks downstairs</div>
-                <div class="perk-detail">Redeem at the front desk snack area</div>
+            <div class="update-row">
+              <div class="update-icon">📢</div>
+              <div class="update-info">
+                <div class="update-name">Saturday cleanup at 10:00 AM</div>
+                <div class="update-meta">Meet in the main lobby. Bonus 24 points for participants.</div>
               </div>
-              <div class="perk-pts">150 pts</div>
+              <span class="tag">Today</span>
             </div>
 
-            <div class="perk-row">
-              <div class="perk-icon">🥤</div>
+            <div class="update-row">
+              <div class="update-icon">🌿</div>
+              <div class="update-info">
+                <div class="update-name">Water refill challenge starts Monday</div>
+                <div class="update-meta">Use reusable bottles all week to help the community tier score.</div>
+              </div>
+              <span class="tag">Soon</span>
+            </div>
+
+            <div class="update-row">
+              <div class="update-icon">🏆</div>
+              <div class="update-info">
+                <div class="update-name">Junction 49 leads by 445 points</div>
+                <div class="update-meta">Transport actions are the biggest gap right now.</div>
+              </div>
+              <span class="tag">Rankings</span>
+            </div>
+
+            <div class="update-row">
+              <div class="update-icon">⚡</div>
+              <div class="update-info">
+                <div class="update-name">Energy saving week announced</div>
+                <div class="update-meta">Lights off, shorter AC use, and shared laundry loads get bonus weight.</div>
+              </div>
+              <span class="tag">Bonus</span>
+            </div>
+
+            <div class="update-row">
+              <div class="update-icon">🎁</div>
+              <div class="update-info">
+                <div class="update-name">Silver tier reward window is open</div>
+                <div class="update-meta">Members can now claim snack and vending offers in the Rewards tab.</div>
+              </div>
+              <span class="tag">Live</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="rewards-page" class="page">
+        <div class="mini-banner">
+          <div class="mini-banner-title">How reward claims work</div>
+          <div class="mini-banner-copy">Each claim uses points and requires watching 2 short 5 second ads in this prototype.</div>
+        </div>
+
+        <div class="reward-grid">
+          <div class="reward-card">
+            <div class="reward-card-head">
+              <div class="reward-logo">🥤</div>
+              <div>
+                <div class="reward-card-title">Vending machine credits</div>
+                <div class="reward-card-sub">$3 vending credit for drinks or snacks</div>
+              </div>
+            </div>
+            <div class="perk-row" style="padding-top:0;">
               <div class="perk-info">
-                <div class="perk-name">Vending machine credit</div>
-                <div class="perk-detail">$3 reward credit</div>
+                <div class="perk-name">Points needed</div>
+                <div class="perk-detail">Fast, low cost reward</div>
               </div>
               <div class="perk-pts">300 pts</div>
             </div>
+            <button class="reward-claim-btn" onclick="startRewardClaim('Vending machine credits',300)">Claim with 2 ads</button>
+            <div class="reward-note">Good for quick claims after transport or recycling streaks.</div>
+          </div>
 
-            <div class="perk-row">
-              <div class="perk-icon">☕</div>
+          <div class="reward-card">
+            <div class="reward-card-head">
+              <div class="reward-logo">☕</div>
+              <div>
+                <div class="reward-card-title">10% off Soma Bistro Cafe</div>
+                <div class="reward-card-sub">Local food incentive for active members</div>
+              </div>
+            </div>
+            <div class="perk-row" style="padding-top:0;">
               <div class="perk-info">
-                <div class="perk-name">Coffee coupon</div>
-                <div class="perk-detail">One free drink</div>
+                <div class="perk-name">Points needed</div>
+                <div class="perk-detail">Cafe discount code</div>
               </div>
               <div class="perk-pts">500 pts</div>
             </div>
+            <button class="reward-claim-btn" onclick="startRewardClaim('10% off Soma Bistro Cafe',500)">Claim with 2 ads</button>
+            <div class="reward-note">Silver tier members and above can unlock local cafe deals.</div>
+          </div>
 
-            <div class="perk-row">
-              <div class="perk-icon">🎟️</div>
+          <div class="reward-card">
+            <div class="reward-card-head">
+              <div class="reward-logo">🍛</div>
+              <div>
+                <div class="reward-card-title">15% off Spice Box</div>
+                <div class="reward-card-sub">Local meal reward</div>
+              </div>
+            </div>
+            <div class="perk-row" style="padding-top:0;">
               <div class="perk-info">
-                <div class="perk-name">Event raffle entry</div>
-                <div class="perk-detail">Monthly giveaway entry</div>
+                <div class="perk-name">Points needed</div>
+                <div class="perk-detail">Meal discount coupon</div>
+              </div>
+              <div class="perk-pts">700 pts</div>
+            </div>
+            <button class="reward-claim-btn" onclick="startRewardClaim('15% off Spice Box',700)">Claim with 2 ads</button>
+            <div class="reward-note">Good higher value reward for members with strong weekly momentum.</div>
+          </div>
+
+          <div class="reward-card">
+            <div class="reward-card-head">
+              <div class="reward-logo">🥨</div>
+              <div>
+                <div class="reward-card-title">Free snacks downstairs</div>
+                <div class="reward-card-sub">Simple front desk snack pickup</div>
+              </div>
+            </div>
+            <div class="perk-row" style="padding-top:0;">
+              <div class="perk-info">
+                <div class="perk-name">Points needed</div>
+                <div class="perk-detail">Fastest local perk</div>
+              </div>
+              <div class="perk-pts">150 pts</div>
+            </div>
+            <button class="reward-claim-btn" onclick="startRewardClaim('Free snacks downstairs',150)">Claim with 2 ads</button>
+            <div class="reward-note">Best for frequent small claims and low point users.</div>
+          </div>
+
+          <div class="reward-card">
+            <div class="reward-card-head">
+              <div class="reward-logo">🎟️</div>
+              <div>
+                <div class="reward-card-title">Community raffle entry</div>
+                <div class="reward-card-sub">Monthly drawing for a bigger prize</div>
+              </div>
+            </div>
+            <div class="perk-row" style="padding-top:0;">
+              <div class="perk-info">
+                <div class="perk-name">Points needed</div>
+                <div class="perk-detail">Chance based reward</div>
               </div>
               <div class="perk-pts">800 pts</div>
             </div>
+            <button class="reward-claim-btn" onclick="startRewardClaim('Community raffle entry',800)">Claim with 2 ads</button>
+            <div class="reward-note">Works well for users who want to save points for bigger value.</div>
+          </div>
 
-            <div class="perk-row">
-              <div class="perk-icon">🛍️</div>
+          <div class="reward-card">
+            <div class="reward-card-head">
+              <div class="reward-logo">🌟</div>
+              <div>
+                <div class="reward-card-title">Double reward week pass</div>
+                <div class="reward-card-sub">One boosted claim next week</div>
+              </div>
+            </div>
+            <div class="perk-row" style="padding-top:0;">
               <div class="perk-info">
-                <div class="perk-name">Community merch discount</div>
-                <div class="perk-detail">Discount on GreenBlocks items</div>
+                <div class="perk-name">Points needed</div>
+                <div class="perk-detail">Best for active users</div>
               </div>
               <div class="perk-pts">1200 pts</div>
             </div>
+            <button class="reward-claim-btn" onclick="startRewardClaim('Double reward week pass',1200)">Claim with 2 ads</button>
+            <div class="reward-note">Fits the incentive loop for users who keep showing up each week.</div>
           </div>
         </div>
       </section>
@@ -1355,11 +1716,12 @@
         <div class="two-col">
           <div class="card">
             <div class="card-title">Profile</div>
+
             <div class="profile-box">
               <div class="profile-avatar" id="profile-avatar">AK</div>
               <div>
                 <div class="profile-name" id="profile-name">Akhil</div>
-                <div class="profile-meta">Member of GreenBlocks Central, ranked #4 in friends, building sustainability points through real actions.</div>
+                <div class="profile-meta">Member of GreenBlocks Central, ranked #4 in your friend group, and building points through real local actions.</div>
               </div>
             </div>
 
@@ -1370,24 +1732,24 @@
               </div>
               <div class="mini-stat">
                 <div class="mini-stat-label">Community</div>
-                <div class="mini-stat-value">GC</div>
+                <div class="mini-stat-value" id="profile-community">GC</div>
               </div>
               <div class="mini-stat">
-                <div class="mini-stat-label">Friends rank</div>
-                <div class="mini-stat-value">#4</div>
+                <div class="mini-stat-label">Rewards claimed</div>
+                <div class="mini-stat-value" id="profile-claims">0</div>
               </div>
             </div>
           </div>
 
           <div class="card ideas-card">
-            <div class="card-title">More things to add later</div>
+            <div class="card-title">Extra polish ideas</div>
             <div class="ideas-list">
-              <div><strong>Proof upload:</strong> add a photo or receipt for actions</div>
-              <div><strong>QR event check-in:</strong> scan to get points at cleanup events</div>
-              <div><strong>Redeem button:</strong> claim the snack or vending rewards</div>
-              <div><strong>Community challenge:</strong> race Junction 49 each week</div>
-              <div><strong>Admin moderation:</strong> approve logged activities</div>
-              <div><strong>Monthly reset:</strong> keep all-time points and fresh monthly ranks</div>
+              <div><strong>Proof upload:</strong> photo or receipt for logged actions</div>
+              <div><strong>QR check-in:</strong> event check-in for cleanup days</div>
+              <div><strong>Admin approval:</strong> approve large point actions</div>
+              <div><strong>Weekly reset:</strong> keep all-time points and refresh weekly ranks</div>
+              <div><strong>Community missions:</strong> beat Junction 49 with one target action each week</div>
+              <div><strong>Partner tab later:</strong> show all local businesses that sponsor incentives</div>
             </div>
           </div>
         </div>
@@ -1396,6 +1758,21 @@
   </main>
 
   <div class="toast" id="toast"></div>
+
+  <div id="ad-modal" class="modal">
+    <div class="modal-card">
+      <div class="modal-title" id="ad-modal-title">Claim reward</div>
+      <div class="modal-copy" id="ad-modal-copy">Watch 2 short ads to finish this claim.</div>
+      <div class="ad-box">
+        <div class="ad-count" id="ad-count">2 ads left</div>
+        <div class="ad-label" id="ad-label">Each ad in this prototype lasts 5 seconds.</div>
+      </div>
+      <div class="modal-actions">
+        <button id="watch-ad-btn" class="soft-green-btn" type="button">Watch ad</button>
+        <button id="close-ad-btn" class="ghost-btn" type="button">Cancel</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     const STORAGE_KEYS = {
@@ -1410,16 +1787,19 @@
       ptsAdded: 84,
       impact: 31.4,
       streak: 7,
+      communityJoined: 'GreenBlocks Central',
+      rewardClaims: 0,
       activity: [18, 12, 24, 16, 28, 34, 16],
       categories: {
-        sustainability: 54,
-        community: 31,
-        personal: 15
+        sustainability: 42,
+        transport: 20,
+        community: 23,
+        energy: 15
       },
       history: [
         { name: 'Cleanup event', pts: 24, time: 'Today, 4:20 PM' },
         { name: 'Used public transit', pts: 18, time: 'Today, 1:05 PM' },
-        { name: 'Reduced energy use', pts: 15, time: 'Yesterday, 8:40 PM' },
+        { name: 'Reduced apartment energy use', pts: 15, time: 'Yesterday, 8:40 PM' },
         { name: 'Recycled waste properly', pts: 12, time: 'Yesterday, 3:15 PM' }
       ]
     });
@@ -1429,6 +1809,14 @@
     let activityChart = null;
     let donutChart = null;
     let friendsChart = null;
+
+    let rewardClaimState = {
+      rewardName: '',
+      rewardCost: 0,
+      adsLeft: 2,
+      timer: null,
+      counting: false
+    };
 
     const authScreen = document.getElementById('auth-screen');
     const app = document.getElementById('app');
@@ -1441,6 +1829,14 @@
     const passwordInput = document.getElementById('password');
     const logoutBtn = document.getElementById('logout-btn');
     const darkModeBtn = document.getElementById('dark-mode-btn');
+
+    const adModal = document.getElementById('ad-modal');
+    const adModalTitle = document.getElementById('ad-modal-title');
+    const adModalCopy = document.getElementById('ad-modal-copy');
+    const adCount = document.getElementById('ad-count');
+    const adLabel = document.getElementById('ad-label');
+    const watchAdBtn = document.getElementById('watch-ad-btn');
+    const closeAdBtn = document.getElementById('close-ad-btn');
 
     function getUsers() {
       return JSON.parse(localStorage.getItem(STORAGE_KEYS.users) || '{}');
@@ -1497,10 +1893,11 @@
     function toggleTheme() {
       const current = localStorage.getItem(STORAGE_KEYS.theme) || 'light';
       applyTheme(current === 'dark' ? 'light' : 'dark');
+      if (currentUser) setTimeout(renderCharts, 80);
     }
 
     function normalizeCategoryData(categories) {
-      const keys = ['sustainability', 'community', 'personal'];
+      const keys = ['sustainability', 'transport', 'community', 'energy'];
       const values = keys.map(key => categories[key] || 0);
       const total = values.reduce((sum, val) => sum + val, 0) || 1;
 
@@ -1508,8 +1905,9 @@
         values,
         percentages: {
           sustainability: Math.round((values[0] / total) * 100),
-          community: Math.round((values[1] / total) * 100),
-          personal: Math.round((values[2] / total) * 100)
+          transport: Math.round((values[1] / total) * 100),
+          community: Math.round((values[2] / total) * 100),
+          energy: Math.round((values[3] / total) * 100)
         }
       };
     }
@@ -1518,8 +1916,9 @@
       if (!currentUser) return;
       const categoryData = normalizeCategoryData(currentUser.profile.categories);
       document.getElementById('cat-sustainability').textContent = categoryData.percentages.sustainability + '%';
+      document.getElementById('cat-transport').textContent = categoryData.percentages.transport + '%';
       document.getElementById('cat-community').textContent = categoryData.percentages.community + '%';
-      document.getElementById('cat-personal').textContent = categoryData.percentages.personal + '%';
+      document.getElementById('cat-energy').textContent = categoryData.percentages.energy + '%';
     }
 
     function updateTaskHistory() {
@@ -1527,13 +1926,13 @@
       const container = document.getElementById('task-history-list');
       const history = currentUser.profile.history || [];
       container.innerHTML = history.slice(0, 6).map(item => `
-        <div class="history-row">
-          <div class="history-icon">✓</div>
-          <div class="history-info">
-            <div class="history-name">${item.name}</div>
-            <div class="history-meta">${item.time}</div>
+        <div class="task-row">
+          <div class="task-icon">✓</div>
+          <div class="task-info">
+            <div class="task-name">${item.name}</div>
+            <div class="task-meta">${item.time}</div>
           </div>
-          <div class="history-pts">+${item.pts}</div>
+          <div class="task-pts">+${item.pts}</div>
         </div>
       `).join('');
     }
@@ -1554,6 +1953,36 @@
       document.getElementById('profile-avatar').textContent = initials(currentUser.username);
       document.getElementById('profile-name').textContent = currentUser.username;
       document.getElementById('profile-points').textContent = currentUser.profile.points.toLocaleString();
+      document.getElementById('profile-community').textContent = currentUser.profile.communityJoined === 'none' ? '--' : 'GC';
+      document.getElementById('profile-claims').textContent = currentUser.profile.rewardClaims || 0;
+    }
+
+    function updateCommunityPage() {
+      if (!currentUser) return;
+
+      const joined = currentUser.profile.communityJoined || 'none';
+      const communityNameEl = document.getElementById('community-name');
+      const communityMetaEl = document.getElementById('community-meta');
+      const communityRankEl = document.getElementById('community-rank');
+      const tierLabelEl = document.getElementById('tier-label');
+      const tierBarEl = document.getElementById('tier-bar');
+      const tierNextEl = document.getElementById('tier-next-copy');
+
+      if (joined === 'none') {
+        communityNameEl.textContent = 'No community joined';
+        communityMetaEl.textContent = 'Join a community to compete in local rankings and unlock tier perks.';
+        communityRankEl.textContent = '--';
+        tierLabelEl.textContent = 'No tier yet';
+        tierBarEl.style.width = '0%';
+        tierNextEl.textContent = 'Join a local community to unlock weekly tier benefits and local reward bonuses.';
+      } else {
+        communityNameEl.textContent = 'GreenBlocks Central';
+        communityMetaEl.textContent = 'Your joined community, ranked #2 locally, and closing the gap on Junction 49.';
+        communityRankEl.textContent = '#2';
+        tierLabelEl.textContent = 'Silver, 253 pts to Gold';
+        tierBarEl.style.width = '76%';
+        tierNextEl.textContent = 'If your community reaches Gold, next week members get double vending credits on one reward claim.';
+      }
     }
 
     function persistCurrentUser() {
@@ -1566,7 +1995,27 @@
       saveUsers(users);
     }
 
+    function updateSummaryFields() {
+      if (!currentUser) return;
+      document.getElementById('display-name').textContent = currentUser.username;
+      document.getElementById('avatar').textContent = initials(currentUser.username);
+      document.getElementById('total-pts').textContent = currentUser.profile.points.toLocaleString();
+      document.getElementById('pts-delta').textContent = '+' + currentUser.profile.ptsAdded + ' this week';
+      document.getElementById('impact-val').textContent = currentUser.profile.impact.toFixed(1);
+      document.getElementById('streak-val').textContent = currentUser.profile.streak + ' days';
+      document.getElementById('week-label').textContent = currentUser.profile.weekPts + ' / 200';
+      const pct = Math.min(Math.round((currentUser.profile.weekPts / 200) * 100), 100);
+      document.getElementById('progress-bar').style.width = pct + '%';
+      updateCategoryLabels();
+      updateTaskHistory();
+      updatePersonalLeaderboard();
+      updateProfilePage();
+      updateCommunityPage();
+    }
+
     function renderCharts() {
+      if (!currentUser) return;
+
       const activityEl = document.getElementById('activityChart');
       const donutEl = document.getElementById('donutChart');
       const friendsEl = document.getElementById('friendsChart');
@@ -1609,13 +2058,12 @@
       });
 
       const categoryData = normalizeCategoryData(currentUser.profile.categories);
-
       donutChart = new Chart(donutEl.getContext('2d'), {
         type: 'doughnut',
         data: {
           datasets: [{
             data: categoryData.values,
-            backgroundColor: ['#4e8f69', '#c58b4d', '#6f8fb8'],
+            backgroundColor: ['#4e8f69', '#6f8fb8', '#c58b4d', '#9aa8b2'],
             borderWidth: 0
           }]
         },
@@ -1662,29 +2110,21 @@
       if (!user) return;
 
       if (!user.profile.categories) {
-        user.profile.categories = { sustainability: 54, community: 31, personal: 15 };
+        user.profile.categories = { sustainability: 42, transport: 20, community: 23, energy: 15 };
       }
       if (!user.profile.history) {
         user.profile.history = defaultProfile().history;
       }
+      if (typeof user.profile.rewardClaims !== 'number') {
+        user.profile.rewardClaims = 0;
+      }
+      if (!user.profile.communityJoined) {
+        user.profile.communityJoined = 'GreenBlocks Central';
+      }
 
       currentUser = { username, ...user };
 
-      document.getElementById('display-name').textContent = username;
-      document.getElementById('avatar').textContent = initials(username);
-      document.getElementById('total-pts').textContent = currentUser.profile.points.toLocaleString();
-      document.getElementById('pts-delta').textContent = '+' + currentUser.profile.ptsAdded + ' this week';
-      document.getElementById('impact-val').textContent = currentUser.profile.impact.toFixed(1);
-      document.getElementById('streak-val').textContent = currentUser.profile.streak + ' days';
-      document.getElementById('week-label').textContent = currentUser.profile.weekPts + ' / 200';
-
-      const pct = Math.min(Math.round((currentUser.profile.weekPts / 200) * 100), 100);
-      document.getElementById('progress-bar').style.width = pct + '%';
-
-      updateCategoryLabels();
-      updateTaskHistory();
-      updatePersonalLeaderboard();
-      updateProfilePage();
+      updateSummaryFields();
 
       authScreen.classList.add('hidden');
       app.classList.remove('hidden');
@@ -1710,14 +2150,7 @@
       });
       currentUser.profile.history = currentUser.profile.history.slice(0, 10);
 
-      document.getElementById('total-pts').textContent = currentUser.profile.points.toLocaleString();
-      document.getElementById('pts-delta').textContent = '+' + currentUser.profile.ptsAdded + ' this week';
-      document.getElementById('impact-val').textContent = currentUser.profile.impact.toFixed(1);
-      document.getElementById('week-label').textContent = currentUser.profile.weekPts + ' / 200';
-      document.getElementById('profile-points').textContent = currentUser.profile.points.toLocaleString();
-
-      const pct = Math.min(Math.round((currentUser.profile.weekPts / 200) * 100), 100);
-      document.getElementById('progress-bar').style.width = pct + '%';
+      updateSummaryFields();
 
       el.style.background = 'rgba(78,143,105,0.16)';
       el.style.borderColor = 'rgba(78,143,105,0.45)';
@@ -1725,10 +2158,6 @@
         el.style.background = '';
         el.style.borderColor = '';
       }, 700);
-
-      updateCategoryLabels();
-      updateTaskHistory();
-      updatePersonalLeaderboard();
 
       if (activityChart) {
         activityChart.data.datasets[0].data = currentUser.profile.activity;
@@ -1768,15 +2197,107 @@
       document.querySelector(`.lb-switch[data-panel="${panelId}"]`).classList.add('active');
     }
 
+    function closeAdModal() {
+      adModal.classList.remove('show');
+      rewardClaimState.rewardName = '';
+      rewardClaimState.rewardCost = 0;
+      rewardClaimState.adsLeft = 2;
+      rewardClaimState.counting = false;
+      if (rewardClaimState.timer) {
+        clearInterval(rewardClaimState.timer);
+        rewardClaimState.timer = null;
+      }
+      adCount.textContent = '2 ads left';
+      adLabel.textContent = 'Each ad in this prototype lasts 5 seconds.';
+      watchAdBtn.textContent = 'Watch ad';
+      watchAdBtn.disabled = false;
+    }
+
+    function startRewardClaim(rewardName, rewardCost) {
+      if (!currentUser) return;
+
+      if (currentUser.profile.points < rewardCost) {
+        showToast('Not enough points for this reward');
+        return;
+      }
+
+      rewardClaimState.rewardName = rewardName;
+      rewardClaimState.rewardCost = rewardCost;
+      rewardClaimState.adsLeft = 2;
+      rewardClaimState.counting = false;
+
+      adModalTitle.textContent = 'Claim ' + rewardName;
+      adModalCopy.textContent = 'Watch 2 short ads to finish this claim. Your points will be used after the second ad.';
+      adCount.textContent = '2 ads left';
+      adLabel.textContent = 'Each ad in this prototype lasts 5 seconds.';
+      watchAdBtn.textContent = 'Watch ad';
+      watchAdBtn.disabled = false;
+      adModal.classList.add('show');
+    }
+
+    function runAdCountdown() {
+      if (rewardClaimState.counting) return;
+      rewardClaimState.counting = true;
+      watchAdBtn.disabled = true;
+
+      let seconds = 5;
+      adLabel.textContent = 'Ad playing, ' + seconds + ' seconds left';
+      rewardClaimState.timer = setInterval(() => {
+        seconds -= 1;
+        if (seconds > 0) {
+          adLabel.textContent = 'Ad playing, ' + seconds + ' seconds left';
+        } else {
+          clearInterval(rewardClaimState.timer);
+          rewardClaimState.timer = null;
+          rewardClaimState.counting = false;
+          rewardClaimState.adsLeft -= 1;
+
+          if (rewardClaimState.adsLeft > 0) {
+            adCount.textContent = rewardClaimState.adsLeft + ' ad left';
+            adLabel.textContent = 'First ad done. Watch one more 5 second ad.';
+            watchAdBtn.textContent = 'Watch final ad';
+            watchAdBtn.disabled = false;
+          } else {
+            currentUser.profile.points -= rewardClaimState.rewardCost;
+            currentUser.profile.rewardClaims += 1;
+            currentUser.profile.history.unshift({
+              name: 'Claimed ' + rewardClaimState.rewardName,
+              pts: -rewardClaimState.rewardCost,
+              time: 'Just now'
+            });
+            currentUser.profile.history = currentUser.profile.history.slice(0, 10);
+            updateSummaryFields();
+
+            if (friendsChart) {
+              friendsChart.data.datasets[0].data = [1724, 1581, 1492, currentUser.profile.points];
+              friendsChart.update();
+            }
+
+            persistCurrentUser();
+            closeAdModal();
+            showToast(rewardClaimState.rewardName + ' claimed');
+          }
+        }
+      }, 1000);
+    }
+
+    function leaveCommunity() {
+      if (!currentUser) return;
+      currentUser.profile.communityJoined = 'none';
+      updateSummaryFields();
+      persistCurrentUser();
+      showToast('You left the community');
+    }
+
     window.logAction = logAction;
+    window.startRewardClaim = startRewardClaim;
+    window.leaveCommunity = leaveCommunity;
 
     loginTab.addEventListener('click', () => setMode('login'));
     registerTab.addEventListener('click', () => setMode('register'));
-
-    darkModeBtn.addEventListener('click', () => {
-      toggleTheme();
-      if (currentUser) setTimeout(renderCharts, 80);
-    });
+    darkModeBtn.addEventListener('click', toggleTheme);
+    watchAdBtn.addEventListener('click', runAdCountdown);
+    closeAdBtn.addEventListener('click', closeAdModal);
 
     document.querySelectorAll('.nav-btn').forEach(btn => {
       btn.addEventListener('click', () => switchPage(btn.dataset.page));
@@ -1834,6 +2355,7 @@
       usernameInput.value = '';
       passwordInput.value = '';
       setMode('login');
+      closeAdModal();
       showToast('Logged out');
     });
 
