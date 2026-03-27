@@ -10,22 +10,22 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg-main: #eef1ef;
-      --bg-soft: #f6f7f5;
-      --bg-accent: #e8efe9;
+      --bg-main: #f7f4ee;
+      --bg-soft: #fcfaf6;
+      --bg-accent: #f2ede3;
       --green-500: #4e8f69;
       --green-600: #3f7958;
       --green-700: #2d5f43;
       --text-primary: #1f2937;
       --text-secondary: #6b7280;
       --border: rgba(31, 41, 55, 0.10);
-      --card: #fbfcfb;
+      --card: #fffdf9;
       --shadow: 0 10px 28px rgba(31, 41, 55, 0.06);
     }
 
     body {
       font-family: 'DM Sans', sans-serif;
-      background: linear-gradient(180deg, #ecefec 0%, #f6f7f5 100%);
+      background: linear-gradient(180deg, #f6f2ea 0%, #fcfaf6 100%);
       color: var(--text-primary);
       min-height: 100vh;
     }
@@ -37,14 +37,14 @@
       display: grid;
       place-items: center;
       padding: 24px;
-      background: linear-gradient(180deg, #eef2ef 0%, #f8f9f7 100%);
+      background: linear-gradient(180deg, #f5f1e8 0%, #fcfaf6 100%);
     }
 
     .auth-card,
     .card,
     .metric-card,
     .user-pill {
-      background: rgba(255,255,255,0.82);
+      background: rgba(255,255,255,0.86);
       backdrop-filter: blur(8px);
     }
 
@@ -107,7 +107,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
-      background: #edf1ed;
+      background: #f1ece2;
       padding: 6px;
       border-radius: 14px;
       margin-bottom: 18px;
@@ -173,8 +173,8 @@
 
     .demo-box {
       margin-top: 18px;
-      background: #f4f7f4;
-      border: 1px dashed #cfd9d0;
+      background: #faf7f1;
+      border: 1px dashed #ddd4c7;
       border-radius: 14px;
       padding: 14px;
     }
@@ -246,8 +246,8 @@
 
     .week-badge {
       font-size: 12px;
-      background: #dde9e0;
-      color: var(--green-700);
+      background: #efe5d4;
+      color: #7c5a1c;
       padding: 6px 14px;
       border-radius: 999px;
       font-weight: 600;
@@ -353,7 +353,7 @@
       align-items: center;
       gap: 10px;
       padding: 10px 0;
-      border-bottom: 1px solid #edf0ed;
+      border-bottom: 1px solid #efe9df;
     }
 
     .leaderboard-row:last-child,
@@ -398,7 +398,7 @@
     .lb-bar-wrap {
       width: 66px;
       height: 6px;
-      background: #e8ece8;
+      background: #eee6da;
       border-radius: 999px;
       overflow: hidden;
     }
@@ -410,7 +410,7 @@
     }
 
     .lb-highlight {
-      background: #f3f7f3;
+      background: #faf5ec;
       border-radius: 10px;
       padding: 10px 8px;
       margin: 0 -8px;
@@ -418,8 +418,8 @@
 
     .you-tag {
       font-size: 10px;
-      background: #dde9e0;
-      color: var(--green-700);
+      background: #efe5d4;
+      color: #7c5a1c;
       padding: 2px 7px;
       border-radius: 999px;
       margin-left: 6px;
@@ -433,7 +433,7 @@
     }
 
     .action-btn {
-      background: #f5f7f5;
+      background: #faf7f1;
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 12px;
@@ -446,8 +446,8 @@
     }
 
     .action-btn:hover {
-      background: #eaf1eb;
-      border-color: #b8c7ba;
+      background: #f2ebdf;
+      border-color: #ccbfa9;
       transform: translateY(-1px);
     }
 
@@ -460,7 +460,7 @@
       justify-content: center;
       font-size: 17px;
       flex-shrink: 0;
-      background: #e9efea;
+      background: #f1ebdf;
     }
 
     .action-text {
@@ -501,9 +501,9 @@
       font-size: 18px;
     }
 
-    .badge-icon.earned { background: #e1ece4; }
+    .badge-icon.earned { background: #efe7d6; }
     .badge-icon.locked {
-      background: #ecefee;
+      background: #f2eee6;
       opacity: 0.55;
       filter: grayscale(1);
     }
@@ -540,13 +540,13 @@
     }
 
     .streak-day.today {
-      background: #e2ebe4;
+      background: #f2ebdf;
       color: var(--green-700);
       border: 1.5px solid var(--green-500);
     }
 
     .streak-day.miss {
-      background: #ecefee;
+      background: #f3efe8;
       color: #9ca3af;
     }
 
@@ -600,7 +600,7 @@
       align-items: center;
       justify-content: center;
       font-size: 16px;
-      background: #ebf0ec;
+      background: #f3ede3;
     }
 
     .reward-info { flex: 1; }
@@ -626,8 +626,8 @@
 
     .ideas-card {
       margin-top: 6px;
-      background: rgba(255,255,255,0.72);
-      border: 1px dashed #cfd7d0;
+      background: rgba(255,251,245,0.78);
+      border: 1px dashed #d8ccba;
     }
 
     .ideas-list {
@@ -780,7 +780,7 @@
             <div class="lb-rank gold">1</div>
             <div class="lb-info">
               <div class="lb-name">Junction 49</div>
-              <div class="lb-meta">132 active members</div>
+              <div class="lb-meta">Near UNCC, student apartment community</div>
             </div>
             <div class="lb-bar-wrap"><div class="lb-bar" style="width:100%"></div></div>
             <div class="lb-pts">4,980</div>
@@ -789,41 +789,41 @@
           <div class="leaderboard-row lb-highlight">
             <div class="lb-rank silver">2</div>
             <div class="lb-info">
-              <div class="lb-name">GreenBlocks Central <span class="you-tag">you</span></div>
-              <div class="lb-meta">104 active members</div>
+              <div class="lb-name">Arcadia</div>
+              <div class="lb-meta">Neighborhood community leaderboard</div>
             </div>
-            <div class="lb-bar-wrap"><div class="lb-bar" style="width:88%"></div></div>
-            <div class="lb-pts" id="community-pts">4,381</div>
+            <div class="lb-bar-wrap"><div class="lb-bar" style="width:90%"></div></div>
+            <div class="lb-pts">4,482</div>
           </div>
 
           <div class="leaderboard-row">
             <div class="lb-rank bronze">3</div>
             <div class="lb-info">
-              <div class="lb-name">North Collective</div>
-              <div class="lb-meta">95 active members</div>
+              <div class="lb-name">The Edge</div>
+              <div class="lb-meta">UNCC area resident group</div>
             </div>
-            <div class="lb-bar-wrap"><div class="lb-bar" style="width:79%"></div></div>
-            <div class="lb-pts">3,952</div>
+            <div class="lb-bar-wrap"><div class="lb-bar" style="width:82%"></div></div>
+            <div class="lb-pts">4,091</div>
           </div>
 
           <div class="leaderboard-row">
             <div class="lb-rank">4</div>
             <div class="lb-info">
-              <div class="lb-name">City Loop</div>
-              <div class="lb-meta">88 active members</div>
+              <div class="lb-name">University Village</div>
+              <div class="lb-meta">Student housing community</div>
             </div>
-            <div class="lb-bar-wrap"><div class="lb-bar" style="width:70%"></div></div>
-            <div class="lb-pts">3,481</div>
+            <div class="lb-bar-wrap"><div class="lb-bar" style="width:76%"></div></div>
+            <div class="lb-pts">3,786</div>
           </div>
 
           <div class="leaderboard-row">
             <div class="lb-rank">5</div>
             <div class="lb-info">
-              <div class="lb-name">Harbor Hub</div>
-              <div class="lb-meta">76 active members</div>
+              <div class="lb-name">Rush</div>
+              <div class="lb-meta">Campus area apartment community</div>
             </div>
-            <div class="lb-bar-wrap"><div class="lb-bar" style="width:63%"></div></div>
-            <div class="lb-pts">3,119</div>
+            <div class="lb-bar-wrap"><div class="lb-bar" style="width:70%"></div></div>
+            <div class="lb-pts">3,412</div>
           </div>
         </div>
 
@@ -905,7 +905,7 @@
               <span style="font-size:12px;color:var(--text-secondary);font-weight:600;">Goal: 200 pts</span>
               <span style="font-size:12px;font-weight:700;color:var(--green-600);" id="week-label">148 / 200</span>
             </div>
-            <div style="width:100%;height:9px;background:#e7ece8;border-radius:999px;overflow:hidden;">
+            <div style="width:100%;height:9px;background:#eee6da;border-radius:999px;overflow:hidden;">
               <div id="progress-bar" style="height:100%;background:linear-gradient(90deg,var(--green-500),var(--green-700));border-radius:999px;width:74%;transition:width 0.35s;"></div>
             </div>
           </div>
@@ -1054,7 +1054,7 @@
             <div><strong>Daily challenges:</strong> one-click task each day with bonus points</div>
             <div><strong>Profile levels:</strong> level 1, 2, 3 based on points</div>
             <div><strong>Friends tab:</strong> add friends and compare progress</div>
-            <div><strong>Claim rewards button:</strong> turn points into real reward cards</div>
+            <div><strong>Claim rewards button:</strong> turn points into reward cards</div>
             <div><strong>Task history:</strong> show recent actions the user logged</div>
             <div><strong>Admin community view:</strong> simple page for community stats</div>
           </div>
@@ -1308,8 +1308,8 @@
       const pct = Math.min(Math.round((currentUser.profile.weekPts / 200) * 100), 100);
       document.getElementById('progress-bar').style.width = pct + '%';
 
-      el.style.background = '#e4ede6';
-      el.style.borderColor = '#95b39d';
+      el.style.background = '#f2ebdf';
+      el.style.borderColor = '#ccbfa9';
       setTimeout(() => {
         el.style.background = '';
         el.style.borderColor = '';
