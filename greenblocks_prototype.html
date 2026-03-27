@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GreenBlocks Prototype</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green-50: #f0faf4;
+      --green-100: #d4f0e0;
+      --green-400: #4caf82;
+      --green-600: #2d8a60;
+      --green-800: #1a5c3e;
+      --sage-50: #f5f7f2;
+      --text-primary: #1a1a1a;
+      --text-secondary: #6b7280;
+      --border: rgba(0,0,0,0.1);
+      --card: #ffffff;
+    }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f5f7f2;
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+    .hidden { display: none !important; }
+    .auth-shell {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: linear-gradient(180deg, #f0faf4 0%, #f5f7f2 100%);
+    }
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .brand-icon {
+      width: 42px; height: 42px; background: #4caf82; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .brand-title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+    .brand-sub { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+    .auth-title { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+    .auth-copy { color: var(--text-secondary); font-size: 14px; line-height: 1.5; margin-bottom: 20px; }
+    .switcher {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+      background: #f5f7f2; padding: 6px; border-radius: 14px; margin-bottom: 18px;
+    }
+    .switcher button {
+      border: none; background: transparent; padding: 10px 14px; border-radius: 10px;
+      font-weight: 600; cursor: pointer; color: var(--text-secondary);
+    }
+    .switcher button.active { background: white; color: var(--text-primary); box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 7px; }
+    .field input {
+      width: 100%; border: 1px solid var(--border); border-radius: 12px;
+      padding: 13px 14px; font-size: 14px; outline: none; background: white;
+    }
+    .field input:focus { border-color: var(--green-400); box-shadow: 0 0 0 3px rgba(76,175,130,0.12); }
+    .primary-btn {
+      width: 100%; border: none; background: var(--green-600); color: white;
+      padding: 14px 16px; border-radius: 12px; font-size: 14px; font-weight: 700;
+      cursor: pointer; margin-top: 6px;
+    }
+    .primary-btn:hover { background: var(--green-800); }
+    .demo-box {
+      margin-top: 18px; background: #f9fdf9; border: 1px dashed #b6d8c3;
+      border-radius: 14px; padding: 14px;
+    }
+    .demo-box p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+    .demo-box strong { color: var(--text-primary); }
+    .auth-msg {
+      min-height: 20px; margin-bottom: 10px; font-size: 13px; font-weight: 600;
+    }
+    .auth-msg.error { color: #b42318; }
+    .auth-msg.success { color: var(--green-600); }
+
+    .dash { padding: 2rem 1.5rem; max-width: 960px; margin: 0 auto; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; gap: 12px; }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { width: 36px; height: 36px; background: #4caf82; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .logo-text { font-size: 20px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.4px; }
+    .logo-sub { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+    .top-actions { display:flex; align-items:center; gap:10px; flex-wrap: wrap; }
+    .week-badge { font-size: 12px; background: #d4f0e0; color: #1a5c3e; padding: 5px 14px; border-radius: 20px; font-weight: 500; }
+    .user-pill { display: flex; align-items: center; gap: 8px; background: white; border: 1px solid var(--border); border-radius: 20px; padding: 5px 14px 5px 6px; }
+    .avatar { width: 26px; height: 26px; border-radius: 50%; background: #4caf82; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: white; }
+    .user-name { font-size: 13px; color: var(--text-primary); font-weight: 500; }
+    .ghost-btn {
+      border: 1px solid var(--border); background: white; color: var(--text-primary);
+      padding: 8px 14px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: 600;
+    }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+    .metric-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+    .metric-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
+    .metric-val { font-size: 24px; font-weight: 600; color: var(--text-primary); line-height: 1; }
+    .metric-delta { font-size: 11px; color: #2d8a60; margin-top: 5px; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+    .card-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 14px; }
+    .leaderboard-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f0f0f0; }
+    .leaderboard-row:last-child { border-bottom: none; }
+    .lb-rank { font-size: 12px; font-weight: 600; color: var(--text-secondary); width: 20px; text-align: center; }
+    .lb-rank.gold { color: #c47d0e; }
+    .lb-rank.silver { color: #888; }
+    .lb-rank.bronze { color: #a0522d; }
+    .lb-info { flex: 1; }
+    .lb-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+    .lb-meta { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
+    .lb-pts { font-size: 13px; font-weight: 600; color: #2d8a60; }
+    .lb-bar-wrap { width: 60px; height: 5px; background: #f0f0f0; border-radius: 3px; overflow: hidden; }
+    .lb-bar { height: 100%; background: #4caf82; border-radius: 3px; }
+    .lb-highlight { background: #f9fdf9; border-radius: 8px; padding: 9px 6px; margin: 0 -6px; }
+    .actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .action-btn {
+      background: var(--sage-50);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .action-btn:hover { background: #d4f0e0; border-color: #4caf82; }
+    .action-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+    .action-text { font-size: 12px; font-weight: 500; color: var(--text-primary); line-height: 1.3; }
+    .action-pts { font-size: 10px; color: #2d8a60; margin-top: 1px; }
+    .badges-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+    .badge { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .badge-icon { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .badge-icon.earned { background: #d4f0e0; }
+    .badge-icon.locked { background: #f0f0f0; opacity: 0.5; filter: grayscale(1); }
+    .badge-label { font-size: 10px; color: var(--text-secondary); text-align: center; max-width: 48px; line-height: 1.3; }
+    .streak-row { display: flex; gap: 6px; margin-top: 8px; }
+    .streak-day { width: 30px; height: 30px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; }
+    .streak-day.done { background: #4caf82; color: white; }
+    .streak-day.today { background: #d4f0e0; color: #1a5c3e; border: 1.5px solid #4caf82; }
+    .streak-day.miss { background: #f0f0f0; color: #aaa; }
+    .section-label { font-size: 11px; font-weight: 500; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+    .chart-wrap { position: relative; width: 100%; height: 150px; }
+    .ring-item { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .ring-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .ring-item-label { font-size: 12px; color: var(--text-secondary); flex: 1; }
+    .ring-item-val { font-size: 12px; font-weight: 500; color: var(--text-primary); }
+    .reward-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f0f0f0; }
+    .reward-row:last-child { border-bottom: none; }
+    .reward-logo { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .reward-info { flex: 1; }
+    .reward-name { font-size: 12px; font-weight: 500; color: var(--text-primary); }
+    .reward-detail { font-size: 11px; color: var(--text-secondary); }
+    .reward-pts { font-size: 11px; color: #c47d0e; font-weight: 600; white-space: nowrap; }
+    .toast {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(60px);
+      background: #1a5c3e; color: white;
+      padding: 10px 22px; border-radius: 24px;
+      font-size: 13px; font-weight: 500;
+      opacity: 0; transition: all 0.3s ease;
+      pointer-events: none; z-index: 999;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    @media (max-width: 640px) {
+      .two-col { grid-template-columns: 1fr; }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); }
+      .dash { padding: 1rem; }
+      .topbar { flex-wrap: wrap; }
+      .auth-card { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <section id="auth-screen" class="auth-shell">
+    <div class="auth-card">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 18 18" fill="none">
+            <path d="M9 2C6 2 3 5 3 9c0 3 2.5 5.5 6 6 3.5-.5 6-3 6-6 0-4-3-7-6-7z" fill="white" opacity="0.9"/>
+            <path d="M9 2v14" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">GreenBlocks</div>
+          <div class="brand-sub">Simple clickable prototype</div>
+        </div>
+      </div>
+
+      <div class="auth-title">Login or create account</div>
+      <div class="auth-copy">This version stores usernames, passwords, and user progress in your browser with localStorage.</div>
+
+      <div class="switcher">
+        <button id="login-tab" class="active" type="button">Login</button>
+        <button id="register-tab" type="button">Register</button>
+      </div>
+
+      <div id="auth-msg" class="auth-msg"></div>
+
+      <form id="auth-form">
+        <div class="field">
+          <label for="username">Username</label>
+          <input id="username" type="text" placeholder="Enter username" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="Enter password" required>
+        </div>
+        <button id="auth-submit" class="primary-btn" type="submit">Login</button>
+      </form>
+
+      <div class="demo-box">
+        <p><strong>Fast demo:</strong> create any username and password, then log in. Your data stays saved in this browser.</p>
+      </div>
+    </div>
+  </section>
+
+  <main id="app" class="hidden">
+    <div class="dash">
+      <div class="topbar">
+        <div class="logo">
+          <div class="logo-icon">
+            <svg width="20" height="20" viewBox="0 0 18 18" fill="none">
+              <path d="M9 2C6 2 3 5 3 9c0 3 2.5 5.5 6 6 3.5-.5 6-3 6-6 0-4-3-7-6-7z" fill="white" opacity="0.9"/>
+              <path d="M9 2v14" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="logo-text">GreenBlocks</div>
+            <div class="logo-sub">Maple Street · Building 4B</div>
+          </div>
+        </div>
+        <div class="top-actions">
+          <span class="week-badge">Week 12</span>
+          <div class="user-pill">
+            <div class="avatar" id="avatar">AK</div>
+            <span class="user-name" id="display-name">Akhil</span>
+          </div>
+          <button id="logout-btn" class="ghost-btn" type="button">Logout</button>
+        </div>
+      </div>
+
+      <div class="metrics-row">
+        <div class="metric-card">
+          <div class="metric-label">Your green points</div>
+          <div class="metric-val" id="total-pts">1,247</div>
+          <div class="metric-delta" id="pts-delta">+84 this week</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Building rank</div>
+          <div class="metric-val">#2</div>
+          <div class="metric-delta">+1 from last week</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">CO₂ saved (kg)</div>
+          <div class="metric-val" id="co2-val">31.4</div>
+          <div class="metric-delta">+3.2 this week</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Current streak</div>
+          <div class="metric-val" id="streak-val">7 days</div>
+          <div class="metric-delta">Keep it going!</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">Building leaderboard</div>
+          <div class="leaderboard-row">
+            <div class="lb-rank gold">1</div>
+            <div class="lb-info">
+              <div class="lb-name">Oak Ave Block C</div>
+              <div class="lb-meta">24 active residents</div>
+            </div>
+            <div class="lb-bar-wrap"><div class="lb-bar" style="width:100%"></div></div>
+            <div class="lb-pts">2,104</div>
+          </div>
+          <div class="leaderboard-row lb-highlight">
+            <div class="lb-rank silver">2</div>
+            <div class="lb-info">
+              <div class="lb-name">Maple St 4B <span style="font-size:10px;background:#d4f0e0;color:#1a5c3e;padding:2px 7px;border-radius:10px;margin-left:4px;">you</span></div>
+              <div class="lb-meta">18 active residents</div>
+            </div>
+            <div class="lb-bar-wrap"><div class="lb-bar" style="width:82%"></div></div>
+            <div class="lb-pts" id="building-pts">1,724</div>
+          </div>
+          <div class="leaderboard-row">
+            <div class="lb-rank bronze">3</div>
+            <div class="lb-info">
+              <div class="lb-name">Birch Lane 2A</div>
+              <div class="lb-meta">20 active residents</div>
+            </div>
+            <div class="lb-bar-wrap"><div class="lb-bar" style="width:71%"></div></div>
+            <div class="lb-pts">1,492</div>
+          </div>
+          <div class="leaderboard-row">
+            <div class="lb-rank">4</div>
+            <div class="lb-info">
+              <div class="lb-name">Cedar Heights 1</div>
+              <div class="lb-meta">15 active residents</div>
+            </div>
+            <div class="lb-bar-wrap"><div class="lb-bar" style="width:55%"></div></div>
+            <div class="lb-pts">1,158</div>
+          </div>
+          <div class="leaderboard-row">
+            <div class="lb-rank">5</div>
+            <div class="lb-info">
+              <div class="lb-name">Elm Court East</div>
+              <div class="lb-meta">12 active residents</div>
+            </div>
+            <div class="lb-bar-wrap"><div class="lb-bar" style="width:41%"></div></div>
+            <div class="lb-pts">862</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Log an action</div>
+          <div class="actions-grid">
+            <button class="action-btn" onclick="logAction(this,'Transit ride',12)">
+              <div class="action-icon" style="background:#e8eddf;">🚌</div>
+              <div><div class="action-text">Transit ride</div><div class="action-pts">+12 pts</div></div>
+            </button>
+            <button class="action-btn" onclick="logAction(this,'Composting',15)">
+              <div class="action-icon" style="background:#f0faf4;">♻️</div>
+              <div><div class="action-text">Composting</div><div class="action-pts">+15 pts</div></div>
+            </button>
+            <button class="action-btn" onclick="logAction(this,'Bike commute',18)">
+              <div class="action-icon" style="background:#f0f8ff;">🚲</div>
+              <div><div class="action-text">Bike commute</div><div class="action-pts">+18 pts</div></div>
+            </button>
+            <button class="action-btn" onclick="logAction(this,'Reduced AC',10)">
+              <div class="action-icon" style="background:#fffbf0;">❄️</div>
+              <div><div class="action-text">Reduced AC use</div><div class="action-pts">+10 pts</div></div>
+            </button>
+            <button class="action-btn" onclick="logAction(this,'Reusable bag',8)">
+              <div class="action-icon" style="background:#f5f7f2;">🛍️</div>
+              <div><div class="action-text">Reusable bag</div><div class="action-pts">+8 pts</div></div>
+            </button>
+            <button class="action-btn" onclick="logAction(this,'Local produce',14)">
+              <div class="action-icon" style="background:#f0faf4;">🥦</div>
+              <div><div class="action-text">Local produce</div><div class="action-pts">+14 pts</div></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">Weekly progress</div>
+          <div style="margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+              <span style="font-size:12px;color:var(--text-secondary);">Goal: 200 pts</span>
+              <span style="font-size:12px;font-weight:600;color:#2d8a60;" id="week-label">148 / 200</span>
+            </div>
+            <div style="width:100%;height:8px;background:#f0f0f0;border-radius:4px;overflow:hidden;">
+              <div id="progress-bar" style="height:100%;background:#4caf82;border-radius:4px;width:74%;transition:width 0.5s;"></div>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="activityChart"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Your badges</div>
+          <div class="badges-row">
+            <div class="badge"><div class="badge-icon earned">🌱</div><div class="badge-label">First step</div></div>
+            <div class="badge"><div class="badge-icon earned">🚌</div><div class="badge-label">Transit rider</div></div>
+            <div class="badge"><div class="badge-icon earned">🔥</div><div class="badge-label">7-day streak</div></div>
+            <div class="badge"><div class="badge-icon earned">♻️</div><div class="badge-label">Composter</div></div>
+            <div class="badge"><div class="badge-icon locked">🌍</div><div class="badge-label">Carbon zero</div></div>
+            <div class="badge"><div class="badge-icon locked">🏆</div><div class="badge-label">Block champ</div></div>
+          </div>
+          <div class="section-label">This week's streak</div>
+          <div class="streak-row">
+            <div class="streak-day done">M</div>
+            <div class="streak-day done">T</div>
+            <div class="streak-day done">W</div>
+            <div class="streak-day done">T</div>
+            <div class="streak-day done">F</div>
+            <div class="streak-day today">S</div>
+            <div class="streak-day miss">S</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">Action breakdown</div>
+          <div style="display:flex;align-items:center;gap:16px;">
+            <canvas id="donutChart" width="110" height="110" style="flex-shrink:0;"></canvas>
+            <div style="flex:1;">
+              <div class="ring-item"><div class="ring-dot" style="background:#4caf82;"></div><div class="ring-item-label">Transit</div><div class="ring-item-val">38%</div></div>
+              <div class="ring-item"><div class="ring-dot" style="background:#60aee8;"></div><div class="ring-item-label">Cycling</div><div class="ring-item-val">25%</div></div>
+              <div class="ring-item"><div class="ring-dot" style="background:#f5a623;"></div><div class="ring-item-label">Composting</div><div class="ring-item-val">22%</div></div>
+              <div class="ring-item"><div class="ring-dot" style="background:#d0dac2;"></div><div class="ring-item-label">Other</div><div class="ring-item-val">15%</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Local rewards</div>
+          <div class="reward-row">
+            <div class="reward-logo" style="background:#f0faf4;">☕</div>
+            <div class="reward-info">
+              <div class="reward-name">Magnolia Coffee Co.</div>
+              <div class="reward-detail">10% off any drink</div>
+            </div>
+            <div class="reward-pts">900 pts</div>
+          </div>
+          <div class="reward-row">
+            <div class="reward-logo" style="background:#f0f8ff;">🚲</div>
+            <div class="reward-info">
+              <div class="reward-name">CityBike Rentals</div>
+              <div class="reward-detail">Free 1-hour ride</div>
+            </div>
+            <div class="reward-pts">1,100 pts</div>
+          </div>
+          <div class="reward-row">
+            <div class="reward-logo" style="background:#fffbf0;">🛒</div>
+            <div class="reward-info">
+              <div class="reward-name">Green Table Market</div>
+              <div class="reward-detail">$5 off $30+ purchase</div>
+            </div>
+            <div class="reward-pts">1,500 pts</div>
+          </div>
+          <div class="reward-row">
+            <div class="reward-logo" style="background:#f0faf4;">🎟️</div>
+            <div class="reward-info">
+              <div class="reward-name">Monthly raffle entry</div>
+              <div class="reward-detail">Win local gift cards</div>
+            </div>
+            <div class="reward-pts">500 pts</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const STORAGE_KEYS = {
+      users: 'greenblocks_users',
+      session: 'greenblocks_session'
+    };
+
+    const defaultProfile = () => ({
+      points: 1247,
+      weekPts: 148,
+      ptsAdded: 84,
+      co2: 31.4,
+      streak: 7,
+      activity: [32, 18, 45, 22, 16, 15, 0]
+    });
+
+    let authMode = 'login';
+    let currentUser = null;
+    let actChart = null;
+    let donutChart = null;
+
+    const authScreen = document.getElementById('auth-screen');
+    const app = document.getElementById('app');
+    const authForm = document.getElementById('auth-form');
+    const authMsg = document.getElementById('auth-msg');
+    const loginTab = document.getElementById('login-tab');
+    const registerTab = document.getElementById('register-tab');
+    const authSubmit = document.getElementById('auth-submit');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    function getUsers() {
+      return JSON.parse(localStorage.getItem(STORAGE_KEYS.users) || '{}');
+    }
+
+    function saveUsers(users) {
+      localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(users));
+    }
+
+    function getSession() {
+      return localStorage.getItem(STORAGE_KEYS.session);
+    }
+
+    function setSession(username) {
+      localStorage.setItem(STORAGE_KEYS.session, username);
+    }
+
+    function clearSession() {
+      localStorage.removeItem(STORAGE_KEYS.session);
+    }
+
+    function setMessage(message, type = '') {
+      authMsg.textContent = message;
+      authMsg.className = 'auth-msg ' + type;
+    }
+
+    function setMode(mode) {
+      authMode = mode;
+      loginTab.classList.toggle('active', mode === 'login');
+      registerTab.classList.toggle('active', mode === 'register');
+      authSubmit.textContent = mode === 'login' ? 'Login' : 'Create account';
+      setMessage('');
+    }
+
+    function initials(name) {
+      return name.slice(0, 2).toUpperCase();
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2200);
+    }
+
+    function loadUser(username) {
+      const users = getUsers();
+      const user = users[username];
+      if (!user) return;
+      currentUser = { username, ...user };
+      document.getElementById('display-name').textContent = username;
+      document.getElementById('avatar').textContent = initials(username);
+      document.getElementById('total-pts').textContent = currentUser.profile.points.toLocaleString();
+      document.getElementById('pts-delta').textContent = '+' + currentUser.profile.ptsAdded + ' this week';
+      document.getElementById('co2-val').textContent = currentUser.profile.co2.toFixed(1);
+      document.getElementById('streak-val').textContent = currentUser.profile.streak + ' days';
+      document.getElementById('week-label').textContent = currentUser.profile.weekPts + ' / 200';
+      const pct = Math.min(Math.round(currentUser.profile.weekPts / 200 * 100), 100);
+      document.getElementById('progress-bar').style.width = pct + '%';
+
+      authScreen.classList.add('hidden');
+      app.classList.remove('hidden');
+      renderCharts();
+    }
+
+    function persistCurrentUser() {
+      if (!currentUser) return;
+      const users = getUsers();
+      users[currentUser.username] = {
+        password: currentUser.password,
+        profile: currentUser.profile
+      };
+      saveUsers(users);
+    }
+
+    function renderCharts() {
+      const activityEl = document.getElementById('activityChart');
+      const donutEl = document.getElementById('donutChart');
+      if (actChart) actChart.destroy();
+      if (donutChart) donutChart.destroy();
+
+      actChart = new Chart(activityEl.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          datasets: [{
+            label: 'Points',
+            data: currentUser.profile.activity,
+            backgroundColor: '#4caf82',
+            borderRadius: 5,
+            borderSkipped: false
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#888' } },
+            y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 11 }, color: '#888' }, beginAtZero: true }
+          }
+        }
+      });
+
+      donutChart = new Chart(donutEl.getContext('2d'), {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: [38, 25, 22, 15],
+            backgroundColor: ['#4caf82', '#60aee8', '#f5a623', '#d0dac2'],
+            borderWidth: 0,
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: false,
+          cutout: '68%',
+          plugins: { legend: { display: false } }
+        }
+      });
+    }
+
+    function logAction(el, name, pts) {
+      if (!currentUser) return;
+      currentUser.profile.points += pts;
+      currentUser.profile.weekPts += pts;
+      currentUser.profile.ptsAdded += pts;
+      currentUser.profile.co2 = +(currentUser.profile.co2 + pts * 0.04).toFixed(1);
+      currentUser.profile.activity[5] += pts;
+
+      document.getElementById('total-pts').textContent = currentUser.profile.points.toLocaleString();
+      document.getElementById('pts-delta').textContent = '+' + currentUser.profile.ptsAdded + ' this week';
+      document.getElementById('co2-val').textContent = currentUser.profile.co2.toFixed(1);
+      document.getElementById('week-label').textContent = currentUser.profile.weekPts + ' / 200';
+      const pct = Math.min(Math.round(currentUser.profile.weekPts / 200 * 100), 100);
+      document.getElementById('progress-bar').style.width = pct + '%';
+
+      el.style.background = '#d4f0e0';
+      el.style.borderColor = '#4caf82';
+      setTimeout(() => { el.style.background = ''; el.style.borderColor = ''; }, 800);
+
+      if (actChart) {
+        actChart.data.datasets[0].data = currentUser.profile.activity;
+        actChart.update();
+      }
+
+      persistCurrentUser();
+      showToast('+' + pts + ' pts, ' + name + ' logged');
+    }
+
+    window.logAction = logAction;
+
+    loginTab.addEventListener('click', () => setMode('login'));
+    registerTab.addEventListener('click', () => setMode('register'));
+
+    authForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value.trim();
+      const users = getUsers();
+
+      if (!username || !password) {
+        setMessage('Enter a username and password.', 'error');
+        return;
+      }
+
+      if (authMode === 'register') {
+        if (users[username]) {
+          setMessage('Username already exists. Use login.', 'error');
+          return;
+        }
+        users[username] = { password, profile: defaultProfile() };
+        saveUsers(users);
+        setSession(username);
+        setMessage('Account created.', 'success');
+        loadUser(username);
+        return;
+      }
+
+      const foundUser = users[username];
+      if (!foundUser || foundUser.password !== password) {
+        setMessage('Wrong username or password.', 'error');
+        return;
+      }
+
+      setSession(username);
+      loadUser(username);
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      clearSession();
+      currentUser = null;
+      app.classList.add('hidden');
+      authScreen.classList.remove('hidden');
+      usernameInput.value = '';
+      passwordInput.value = '';
+      setMode('login');
+      showToast('Logged out');
+    });
+
+    window.addEventListener('load', () => {
+      setMode('login');
+      const sessionUser = getSession();
+      const users = getUsers();
+      if (sessionUser && users[sessionUser]) {
+        loadUser(sessionUser);
+      }
+    });
+  </script>
+</body>
+</html>
